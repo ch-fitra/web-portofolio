@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurelia Dananjaya — Fashion Designer & Atelier</title>
+  <meta name="description" content="Portofolio adibusana, haute couture, kebaya modern, gaun pengantin, dan karya tata busana eksklusif.">
+  <meta name="keywords" content="fashion designer, tata busana, haute couture, kebaya modern, gaun pengantin, atelier, lookbook">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <script type="module" crossorigin src="/assets/index-D_wdOB0G.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-Dik-NrOW.css">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Main Content Wrapper -->
+  <main>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+      <div id="hero-banner-bg" class="hero-banner-bg"></div>
+      <div class="container hero-content">
+        
+        <div class="profile-avatar-wrapper">
+          <img id="hero-avatar" src="" alt="Designer Avatar" class="profile-avatar">
+        </div>
+
+        <h1 id="hero-name" class="hero-name">Aurelia Dananjaya</h1>
+        <div id="hero-title" class="hero-title-role">Fashion Designer & Couturier</div>
+        <p id="hero-bio" class="hero-bio">
+          Spesialis dalam perancangan busana custom-made, haute couture, kebaya modern kontemporer, dan gaun pesta eksklusif dengan detail jahitan presisi tinggi.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#portfolio" class="btn btn-primary btn-lg">
+            <i class="fas fa-sparkles"></i> Lihat Lookbook Koleksi
+          </a>
+        </div>
+
+        <!-- Social Media Links -->
+        <div id="social-links-bar" class="social-links-bar"></div>
+
+        <!-- Quick Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div id="stat-exp" class="stat-number">6+</div>
+            <div class="stat-label">Tahun Pengalaman Atelier</div>
+          </div>
+          <div class="stat-item">
+            <div id="stat-proj" class="stat-number">140+</div>
+            <div class="stat-label">Karya Busana Tercipta</div>
+          </div>
+          <div class="stat-item">
+            <div id="stat-clients" class="stat-number">95+</div>
+            <div class="stat-label">Klien Puas & Pengantin</div>
+          </div>
+          <div class="stat-item">
+            <div id="stat-total-items" class="stat-number">12</div>
+            <div class="stat-label">Total Busana di Galeri</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Portfolio Showcase Section -->
+    <section id="portfolio" class="section portfolio-section">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-scissors"></i> Lookbook & Portofolio</span>
+          <h2 class="section-title">Eksplorasi <span class="gradient-text">Koleksi Busana</span></h2>
+          <p class="section-subtitle">Koleksi adibusana pilihan mulai dari haute couture, kebaya modern, gaun pengantin, hingga ready-to-wear elegan.</p>
+        </div>
+
+        <!-- Search Toolbar -->
+        <div class="portfolio-filter-wrapper" style="margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+            
+            <!-- Live Search Box -->
+            <div class="search-box-wrapper" style="flex: 1; max-width: 550px;">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="portfolio-search" class="portfolio-search-input" placeholder="Cari nama busana, bahan kain, acara, atau deskripsi...">
+              <button id="search-clear-btn" class="search-clear-btn" title="Hapus Pencarian">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div style="font-size: 0.9rem; color: var(--text-muted);">
+              <span id="results-count">Menampilkan 0 busana</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Portfolio Cards Grid -->
+        <div id="portfolio-grid" class="portfolio-grid"></div>
+
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <!-- =========================================================================
+       MODALS & CMS PANELS
+       ========================================================================= -->
+
+  <!-- 1. Lightbox Media Modal (Public Viewer) -->
+  <div id="lightbox-modal" class="lightbox-modal">
+    <button id="lightbox-close-btn" class="lightbox-close-btn" title="Tutup (Esc)">
+      <i class="fas fa-times"></i>
+    </button>
+    <button id="lightbox-prev-btn" class="lightbox-nav-btn prev" title="Sebelumnya (←)">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="lightbox-next-btn" class="lightbox-nav-btn next" title="Selanjutnya (→)">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <div class="lightbox-container">
+      <div id="lightbox-media-box" class="lightbox-media-box">
+        <!-- Media Image or Video dynamic -->
+      </div>
+      <div class="lightbox-info-box">
+        
+        <div class="lightbox-meta-row">
+          <span id="lightbox-category" class="badge badge-primary">Haute Couture</span>
+        </div>
+
+        <h2 id="lightbox-title" class="lightbox-title">Judul Busana</h2>
+        <p id="lightbox-desc" class="lightbox-description">Deskripsi lengkap karya.</p>
+
+        <div class="lightbox-details-list">
+          <div>
+            <div class="details-item-label">Tahun / Musim</div>
+            <div id="lightbox-year" class="details-item-value">2024</div>
+          </div>
+          <div>
+            <div class="details-item-label">Koleksi / Klien</div>
+            <div id="lightbox-client" class="details-item-value">Gala Collection</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">
+          Material Kain & Detail Pengerjaan
+        </div>
+        <div id="lightbox-tools" class="lightbox-tools-tags"></div>
+
+        <div class="lightbox-actions">
+          <a id="lightbox-project-link" href="#" target="_blank" class="btn btn-primary btn-sm">
+            <i class="fas fa-external-link-alt"></i> Tautan Detail Koleksi
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PIN Authentication Modal -->
+  <div id="pin-modal" class="app-modal">
+    <div class="modal-content" style="max-width: 380px; text-align: center;">
+      <div class="modal-header">
+        <h3 style="font-size: 1.15rem;"><i class="fas fa-lock" style="color: var(--accent-primary);"></i> Akses Pengelola Studio</h3>
+        <button id="close-pin-modal-btn" class="btn btn-secondary btn-icon btn-sm"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+          Masukkan 4-digit PIN keamanan untuk mengelola koleksi busana Anda.
+        </p>
+        
+        <div class="pin-display-dots">
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+        </div>
+
+        <div id="pin-error-msg" style="color: #ef4444; font-size: 0.85rem; height: 20px; font-weight: 600;"></div>
+
+        <div class="pin-keypad-grid">
+          <button class="pin-key-btn" data-key="1">1</button>
+          <button class="pin-key-btn" data-key="2">2</button>
+          <button class="pin-key-btn" data-key="3">3</button>
+          <button class="pin-key-btn" data-key="4">4</button>
+          <button class="pin-key-btn" data-key="5">5</button>
+          <button class="pin-key-btn" data-key="6">6</button>
+          <button class="pin-key-btn" data-key="7">7</button>
+          <button class="pin-key-btn" data-key="8">8</button>
+          <button class="pin-key-btn" data-key="9">9</button>
+          <button class="pin-key-btn" data-key="clear" style="font-size: 0.9rem; color: #ef4444;">C</button>
+          <button class="pin-key-btn" data-key="0">0</button>
+          <button class="pin-key-btn" data-key="backspace"><i class="fas fa-delete-left"></i></button>
+        </div>
+
+        <div style="margin-top: 1.25rem; font-size: 0.8rem; color: var(--text-muted);">
+          Default PIN: <strong style="color: var(--accent-primary);">1234</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Admin Overlay / Dashboard View -->
+  <div id="cms-overlay" class="cms-overlay">
+    <div class="cms-wrapper">
+      
+      <!-- Sidebar Navigation -->
+      <aside class="cms-sidebar">
+        <div class="cms-brand">
+          <div class="logo-icon" style="width:36px; height:36px; font-size: 1rem;"><i class="fas fa-scissors"></i></div>
+          <div>
+            <div id="cms-brand-name" style="font-weight: 800; font-size: 1.1rem; line-height: 1.2;">Aurelia Atelier</div>
+            <span class="cms-brand-badge">Studio Panel</span>
+          </div>
+        </div>
+
+        <ul class="cms-nav-list">
+          <li class="cms-nav-item">
+            <button class="cms-nav-btn active" data-tab="dashboard">
+              <i class="fas fa-gauge-high"></i> Ringkasan
+            </button>
+          </li>
+          <li class="cms-nav-item">
+            <button class="cms-nav-btn" data-tab="items">
+              <i class="fas fa-shirt"></i> Kelola Busana
+            </button>
+          </li>
+          <li class="cms-nav-item">
+            <button class="cms-nav-btn" data-tab="profile">
+              <i class="fas fa-id-card"></i> Profil Designer
+            </button>
+          </li>
+          <li class="cms-nav-item">
+            <button class="cms-nav-btn" data-tab="services">
+              <i class="fas fa-gem"></i> Layanan
+            </button>
+          </li>
+          <li class="cms-nav-item">
+            <button class="cms-nav-btn" data-tab="categories">
+              <i class="fas fa-tags"></i> Kategori Koleksi
+            </button>
+          </li>
+          <li class="cms-nav-item">
+            <button class="cms-nav-btn" data-tab="backup">
+              <i class="fas fa-cloud-arrow-down"></i> Backup & Ekspor
+            </button>
+          </li>
+          <li class="cms-nav-item">
+            <button class="cms-nav-btn" data-tab="settings">
+              <i class="fas fa-gear"></i> Pengaturan Galeri
+            </button>
+          </li>
+        </ul>
+
+        <div class="cms-sidebar-footer">
+          <button id="cms-logout-btn" class="btn btn-outline btn-sm" style="width: 100%;">
+            <i class="fas fa-arrow-right-from-bracket"></i> Keluar Pengelola
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <section class="cms-main">
+        
+        <!-- Top Bar -->
+        <div class="cms-topbar">
+          <h2 id="cms-current-view-title" class="cms-view-title">Ringkasan</h2>
+          
+          <div class="cms-topbar-actions">
+            <button id="add-new-item-btn" class="btn btn-primary btn-sm">
+              <i class="fas fa-plus"></i> Tambah Busana Baru
+            </button>
+            <button id="close-cms-btn" class="btn btn-secondary btn-sm" title="Kembali ke Web Portofolio">
+              <i class="fas fa-eye"></i> Lihat Web Publik
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab Content Scrollable -->
+        <div class="cms-content-scroll">
+          
+          <!-- TAB 1: Dashboard -->
+          <div id="tab-dashboard" class="cms-tab-pane active">
+            <div class="cms-dashboard-grid">
+              <div class="cms-stat-card">
+                <div class="cms-stat-icon"><i class="fas fa-shirt"></i></div>
+                <div class="cms-stat-info">
+                  <h4>Total Busana</h4>
+                  <div id="cms-stat-items" class="stat-val">0</div>
+                </div>
+              </div>
+              <div class="cms-stat-card">
+                <div class="cms-stat-icon" style="color: #06b6d4;"><i class="fas fa-camera"></i></div>
+                <div class="cms-stat-info">
+                  <h4>Foto Lookbook</h4>
+                  <div id="cms-stat-photos" class="stat-val">0</div>
+                </div>
+              </div>
+              <div class="cms-stat-card">
+                <div class="cms-stat-icon" style="color: #ec4899;"><i class="fas fa-video"></i></div>
+                <div class="cms-stat-info">
+                  <h4>Video Runway</h4>
+                  <div id="cms-stat-videos" class="stat-val">0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card" style="padding: 2rem; margin-bottom: 2rem;">
+              <h3 style="margin-bottom: 0.8rem;"><i class="fas fa-wand-magic-sparkles" style="color: var(--accent-primary);"></i> Panel Pengelola Atelier Tata Busana</h3>
+              <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                Kelola portofolio gaun dan koleksi busana Anda dengan mudah. Tambahkan foto lookbook resolusi tinggi, video peragaan busana, atur mode tampilan galeri (apakah hanya foto saja atau foto & video), serta cadangkan data Anda dalam format JSON kapan saja.
+              </p>
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button onclick="document.querySelector('.cms-nav-btn[data-tab=\'items\']').click()" class="btn btn-primary btn-sm">
+                  <i class="fas fa-list"></i> Lihat Koleksi Busana
+                </button>
+                <button onclick="document.querySelector('.cms-nav-btn[data-tab=\'profile\']').click()" class="btn btn-secondary btn-sm">
+                  <i class="fas fa-user-pen"></i> Edit Profil Designer
+                </button>
+                <button onclick="document.querySelector('.cms-nav-btn[data-tab=\'settings\']').click()" class="btn btn-secondary btn-sm">
+                  <i class="fas fa-gear"></i> Atur Mode Galeri (Foto Saja / Video)
+                </button>
+                <button onclick="document.querySelector('.cms-nav-btn[data-tab=\'backup\']').click()" class="btn btn-outline btn-sm">
+                  <i class="fas fa-download"></i> Ekspor Data JSON
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: Kelola Busana (Items CRUD) -->
+          <div id="tab-items" class="cms-tab-pane">
+            <div class="cms-table-container">
+              <div class="cms-table-header">
+                <div style="display: flex; align-items: center; gap: 1rem; flex: 1; max-width: 500px;">
+                  <input type="text" id="cms-search-items" class="form-input" placeholder="Cari busana berdasarkan nama..." style="padding: 0.55rem 1rem;">
+                  <select id="cms-filter-category" class="form-select" style="padding: 0.55rem 1rem; max-width: 200px;">
+                    <option value="all">Semua Kategori</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="overflow-x: auto;">
+                <table class="cms-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 70px;">Media</th>
+                      <th>Nama Busana & Detail</th>
+                      <th>Tipe</th>
+                      <th>Kategori</th>
+                      <th>Interaksi</th>
+                      <th style="width: 150px;">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cms-items-table-body">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: Profil & Branding -->
+          <div id="tab-profile" class="cms-tab-pane">
+            <div class="glass-card" style="padding: 2rem; max-width: 850px;">
+              <form id="cms-profile-form">
+                
+                <h3 style="margin-bottom: 1.5rem;">Identitas & Logo Navbar</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                  <div class="form-group">
+                    <label class="form-label">Nama Lengkap Designer</label>
+                    <input type="text" id="profile-name" class="form-input" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Nama Brand / Logo (Header)</label>
+                    <input type="text" id="profile-brand-name" class="form-input" placeholder="e.g. Aurelia Atelier">
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                  <div class="form-group">
+                    <label class="form-label">Gelar / Spesialisasi</label>
+                    <input type="text" id="profile-title-input" class="form-input" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Status Ketersediaan</label>
+                    <input type="text" id="profile-status-text" class="form-input" placeholder="e.g. Menerima Pesanan Custom & Fitting">
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                  <div class="form-group">
+                    <label class="form-label">URL Foto Profil (Avatar)</label>
+                    <input type="text" id="profile-avatar-url" class="form-input" placeholder="https://...">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">URL Banner Sampul</label>
+                    <input type="text" id="profile-cover-url" class="form-input" placeholder="https://...">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Bio Singkat (Hero)</label>
+                  <textarea id="profile-bio-input" class="form-textarea" style="min-height: 80px;"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Tentang Saya / Filosofi Desain</label>
+                  <textarea id="profile-about-input" class="form-textarea" style="min-height: 120px;"></textarea>
+                </div>
+
+                <h3 style="margin: 2rem 0 1.25rem 0;">Statistik Pengalaman</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 2rem;">
+                  <div class="form-group">
+                    <label class="form-label">Tahun Pengalaman</label>
+                    <input type="number" id="profile-exp" class="form-input" min="0">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Jumlah Busana Tercipta</label>
+                    <input type="number" id="profile-proj" class="form-input" min="0">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Jumlah Klien Puas</label>
+                    <input type="number" id="profile-clients" class="form-input" min="0">
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;">
+                  <div class="form-group">
+                    <label class="form-label">Lokasi Studio / Atelier</label>
+                    <input type="text" id="profile-location" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Email Kontak</label>
+                    <input type="email" id="profile-email" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">No. Telepon / WhatsApp</label>
+                    <input type="text" id="profile-phone" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Nomor WhatsApp API (e.g. 628123...)</label>
+                    <input type="text" id="profile-whatsapp" class="form-input">
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1rem;">
+                  <div class="form-group">
+                    <label class="form-label">Instagram Link</label>
+                    <input type="text" id="profile-instagram" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">YouTube Link</label>
+                    <input type="text" id="profile-youtube" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Behance Link</label>
+                    <input type="text" id="profile-behance" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">LinkedIn Link</label>
+                    <input type="text" id="profile-linkedin" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">TikTok / Twitter Link</label>
+                    <input type="text" id="profile-twitter" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Website / Portfolio Lain</label>
+                    <input type="text" id="profile-dribbble" class="form-input">
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;">
+                  <i class="fas fa-save"></i> Simpan Profil Designer
+                </button>
+
+              </form>
+            </div>
+          </div>
+
+          <!-- TAB 4: Layanan -->
+          <div id="tab-services" class="cms-tab-pane">
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem;">
+              <div>
+                <h3 style="margin-bottom: 1.25rem;">Daftar Layanan Busana</h3>
+                <div id="cms-services-list"></div>
+              </div>
+              <div>
+                <div class="glass-card" style="padding: 2rem;">
+                  <h3 style="margin-bottom: 1.25rem;">Tambah Layanan Baru</h3>
+                  <form id="add-service-form">
+                    <div class="form-group">
+                      <label class="form-label">Judul Layanan *</label>
+                      <input type="text" id="new-serv-title" class="form-input" placeholder="e.g. Custom Bespoke Bridal Gown" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Ikon</label>
+                      <select id="new-serv-icon" class="form-select">
+                        <option value="scissors">Gunting (Bespoke / Jahit)</option>
+                        <option value="gem">Permata (Kebaya / Etnik)</option>
+                        <option value="ring">Cincin (Bridal / Wedding)</option>
+                        <option value="shirt">Baju (Ready-to-Wear)</option>
+                        <option value="video">Video (Runway)</option>
+                        <option value="sparkles">Sparkles (Styling)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Deskripsi Layanan *</label>
+                      <textarea id="new-serv-desc" class="form-textarea" placeholder="Jelaskan cakupan layanan pembuatan busana..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                      <i class="fas fa-plus"></i> Tambah Layanan
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: Kategori -->
+          <div id="tab-categories" class="cms-tab-pane">
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem;">
+              <div>
+                <h3 style="margin-bottom: 1.25rem;">Daftar Kategori Koleksi</h3>
+                <div id="cms-categories-list"></div>
+              </div>
+              <div>
+                <div class="glass-card" style="padding: 2rem;">
+                  <h3 style="margin-bottom: 1.25rem;">Tambah Kategori Koleksi</h3>
+                  <form id="add-category-form">
+                    <div class="form-group">
+                      <label class="form-label">Nama Kategori *</label>
+                      <input type="text" id="new-cat-name" class="form-input" placeholder="e.g. Modest Fashion / Hijab Wear" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Ikon Kategori</label>
+                      <select id="new-cat-icon" class="form-select">
+                        <option value="scissors">Haute Couture (Gunting)</option>
+                        <option value="gem">Kebaya & Etnik (Permata)</option>
+                        <option value="ring">Bridal / Wedding (Cincin)</option>
+                        <option value="shirt">Ready-to-Wear (Pakaian)</option>
+                        <option value="video">Runway Video (Kamera Video)</option>
+                        <option value="sparkles">Sparkles</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                      <i class="fas fa-plus"></i> Tambah Kategori
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 6: Backup & Template Data -->
+          <div id="tab-backup" class="cms-tab-pane">
+            <div class="glass-card" style="padding: 2.5rem; max-width: 800px;">
+              <h3 style="margin-bottom: 1rem;"><i class="fas fa-file-export" style="color: var(--accent-primary);"></i> Cadangkan & Salin Portofolio Busana</h3>
+              <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 2rem;">
+                Anda dapat mengekspor seluruh karya foto lookbook, video, detail bahan kain, kategori, dan profil menjadi file JSON mandiri. File ini bisa disimpan sebagai backup atau diimpor ke perangkat/web lain.
+              </p>
+
+              <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                
+                <div style="padding: 1.5rem; background: var(--bg-tertiary); border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <strong style="font-size: 1.05rem;">Ekspor Data Koleksi ke File JSON</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Unduh semua data karya busana & pengaturan saat ini</div>
+                  </div>
+                  <button id="export-json-btn" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Ekspor JSON Sekarang
+                  </button>
+                </div>
+
+                <div style="padding: 1.5rem; background: var(--bg-tertiary); border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <strong style="font-size: 1.05rem;">Impor Data dari File JSON</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Muat data portofolio dari file JSON backup</div>
+                  </div>
+                  <div>
+                    <label for="import-json-input" class="btn btn-secondary" style="cursor: pointer;">
+                      <i class="fas fa-upload"></i> Pilih File JSON
+                    </label>
+                    <input type="file" id="import-json-input" accept=".json" style="display: none;">
+                  </div>
+                </div>
+
+                <div style="padding: 1.5rem; background: rgba(239, 68, 68, 0.08); border-radius: var(--radius-md); border: 1px solid rgba(239, 68, 68, 0.25); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <strong style="font-size: 1.05rem; color: #ef4444;">Reset ke Contoh Koleksi Busana Awal</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Kembalikan ke data contoh koleksi awal</div>
+                  </div>
+                  <button id="reset-demo-data-btn" class="btn btn-danger btn-sm">
+                    <i class="fas fa-rotate-left"></i> Reset ke Contoh
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 7: Pengaturan Galeri & Tampilan -->
+          <div id="tab-settings" class="cms-tab-pane">
+            <div class="glass-card" style="padding: 2.5rem; max-width: 650px;">
+              <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-gear" style="color: var(--accent-primary);"></i> Pengaturan Galeri & Tampilan</h3>
+              <form id="cms-settings-form">
+                
+                <!-- Fashion Media Display Mode Setting -->
+                <div class="form-group" style="padding: 1.25rem; background: var(--bg-tertiary); border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+                  <label class="form-label" for="settings-media-mode" style="font-size: 1rem; color: var(--accent-primary);">
+                    <i class="fas fa-photo-film"></i> Mode Publikasi Media
+                  </label>
+                  <select id="settings-media-mode" class="form-select" style="margin-top: 0.5rem;">
+                    <option value="all">Tampilkan Foto & Video (Semua)</option>
+                    <option value="photo_only">Hanya Foto (Lookbook Foto Saja - Sembunyikan Video)</option>
+                    <option value="video_only">Hanya Video (Runway / Reels Video Saja)</option>
+                  </select>
+                  <small style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.4rem; display: block;">
+                    Pilih <strong>"Hanya Foto"</strong> jika portofolio Anda saat ini hanya menampilkan karya foto tata busana.
+                  </small>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                  <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.95rem;">
+                    <input type="checkbox" id="settings-show-media-btns" checked style="width: 18px; height: 18px; accent-color: var(--accent-primary);">
+                    <span>Tampilkan Tombol Filter Media (Semua / Foto / Video) di Atas Galeri</span>
+                  </label>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                  <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.95rem;">
+                    <input type="checkbox" id="settings-show-category-filter" checked style="width: 18px; height: 18px; accent-color: var(--accent-primary);">
+                    <span>Tampilkan Bar Kategori Koleksi di Atas Galeri</span>
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="settings-pin">PIN Keamanan Pengelola (4 Digit)</label>
+                  <input type="password" id="settings-pin" class="form-input" maxlength="8" required>
+                  <small style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.3rem;">Digunakan untuk membuka panel pengelola ini.</small>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="settings-site-title">Judul Halaman Web (Browser Tab)</label>
+                  <input type="text" id="settings-site-title" class="form-input">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="settings-footer-text">Teks Hak Cipta (Footer)</label>
+                  <input type="text" id="settings-footer-text" class="form-input" placeholder="e.g. Hak cipta busana & desain dilindungi undang-undang.">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="settings-theme">Tema Tampilan Bawaan</label>
+                  <select id="settings-theme" class="form-select">
+                    <option value="dark">Dark Luxe (Elegan Gelap)</option>
+                    <option value="light">Clean Light (Terang Modern)</option>
+                    <option value="cyber">Cyber Neon (Futuristik)</option>
+                  </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                  <i class="fas fa-save"></i> Simpan Pengaturan
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <!-- 4. Modal Add / Edit Portfolio Item -->
+  <div id="item-modal" class="app-modal">
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <h3 id="item-modal-title">Tambah Busana Baru</h3>
+        <button id="close-item-modal-btn" class="btn btn-secondary btn-icon btn-sm"><i class="fas fa-times"></i></button>
+      </div>
+
+      <form id="item-form">
+        <div class="modal-body">
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="item-title">Nama / Judul Busana *</label>
+              <input type="text" id="item-title" class="form-input" placeholder="e.g. Lumina Gown - Silk Organza Evening Dress" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="item-category">Kategori Koleksi *</label>
+              <select id="item-category" class="form-select"></select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="item-media-type">Tipe Media *</label>
+              <select id="item-media-type" class="form-select">
+                <option value="photo">Foto Lookbook (HD)</option>
+                <option value="video">Video Runway (MP4 / YouTube)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="item-media-url">URL Media (Opsional jika upload file)</label>
+              <input type="text" id="item-media-url" class="form-input" placeholder="https://... (URL Foto atau Video)">
+            </div>
+          </div>
+
+          <!-- Drag and Drop Media Upload Zone -->
+          <div class="form-group">
+            <label class="form-label">Upload Foto / Video Busana Langsung</label>
+            <div id="media-dropzone" class="upload-dropzone">
+              <div class="dropzone-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+              <div style="font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem;">Tarik & Lepas File Foto / Video ke Sini atau Klik untuk Memilih</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">Mendukung format JPG, PNG, WEBP, GIF, MP4, WebM</div>
+              <input type="file" id="media-file-input" accept="image/*,video/*" style="display: none;">
+            </div>
+            <div id="dropzone-preview" class="dropzone-preview-container"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="item-excerpt">Ringkasan Desain (Muncul di kartu lookbook)</label>
+            <input type="text" id="item-excerpt" class="form-input" placeholder="Ringkasan 1-2 kalimat mengenai siluet & material...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="item-description">Deskripsi Lengkap / Cerita Pembuatan Busana</label>
+            <textarea id="item-description" class="form-textarea" placeholder="Jelaskan konsep rancangan, teknik jahit (draping, boning, beading), dan filosofi warna..."></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="item-client">Koleksi / Acara / Klien</label>
+              <input type="text" id="item-client" class="form-input" placeholder="e.g. Jakarta Fashion Week / Wedding Gala">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-year">Tahun / Musim</label>
+              <input type="text" id="item-year" class="form-input" placeholder="2024">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-tools">Material Kain / Detail Tekstil</label>
+              <input type="text" id="item-tools" class="form-input" placeholder="Sutra Organza, Brokat Chantilly, Swarovski (pisah koma)">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="item-project-url">Tautan Detail Proyek / Press (Opsional)</label>
+            <input type="text" id="item-project-url" class="form-input" placeholder="https://...">
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.8rem; margin-top: 1rem;">
+            <label class="switch">
+              <input type="checkbox" id="item-featured">
+              <span class="slider"></span>
+            </label>
+            <label for="item-featured" style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">Tandai Sebagai Koleksi Unggulan (Featured)</label>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancel-item-btn" class="btn btn-secondary">Batal</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Busana</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+</body>
+</html>
