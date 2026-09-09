@@ -5,8 +5,8 @@
  */
 
 export const INITIAL_PROFILE = {
-  name: "Aurelia Dananjaya",
-  brandName: "Aurelia Atelier",
+  name: "Rani Nuraini",
+  brandName: "Rani Nuraini Atelier",
   title: "Fashion Designer & Couturier",
   status: "available", // 'available' | 'busy' | 'offline'
   statusText: "Menerima Pesanan Custom & Fitting",
@@ -15,7 +15,7 @@ export const INITIAL_PROFILE = {
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
   coverImage: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=80",
   location: "Jakarta & Bandung, Indonesia",
-  email: "aurelia.atelier@example.com",
+  email: "rani.nuraini@example.com",
   phone: "+62 812-9876-5432",
   whatsapp: "6281298765432",
   resumeUrl: "#",
@@ -184,7 +184,7 @@ export const INITIAL_PORTFOLIO_ITEMS = [
 export const INITIAL_SETTINGS = {
   theme: "dark", // 'dark' | 'light' | 'cyber'
   adminPin: "1234",
-  siteTitle: "Aurelia Dananjaya — Fashion Designer & Atelier",
+  siteTitle: "Rani Nuraini — Fashion Designer & Atelier",
   adminButtonLabel: "Studio Manager",
   footerText: "Hak cipta busana & desain dilindungi undang-undang.",
   

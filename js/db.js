@@ -71,6 +71,24 @@ class PortfolioDB {
       localStorage.setItem(STORAGE_KEYS.FASHION_SEED, 'true');
       localStorage.setItem(STORAGE_KEYS.INITIALIZED, 'true');
     }
+
+    // Upgrade only the untouched demo identity so existing visitors see the
+    // current portfolio owner without overwriting a profile edited in the CMS.
+    const profile = this.getProfile();
+    if (profile.name === 'Aurelia Dananjaya' && profile.brandName === 'Aurelia Atelier') {
+      profile.name = 'Rani Nuraini';
+      profile.brandName = 'Rani Nuraini Atelier';
+      if (profile.email === 'aurelia.atelier@example.com') {
+        profile.email = 'rani.nuraini@example.com';
+      }
+      this.saveProfile(profile);
+    }
+
+    const settings = this.getSettings();
+    if (settings.siteTitle === 'Aurelia Dananjaya — Fashion Designer & Atelier') {
+      settings.siteTitle = 'Rani Nuraini — Fashion Designer & Atelier';
+      this.saveSettings(settings);
+    }
   }
 
   async getDB() {

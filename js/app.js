@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const profile = db.getProfile();
   const initialTheme = settings.theme || 'dark';
   window.setTheme(initialTheme);
-  document.title = settings.siteTitle || `${profile.name || 'Creative Portfolio'} — Visual Portfolio`;
+  document.title = settings.siteTitle || 'Rani Nuraini Atelier — Feed Koleksi';
 
   // 2. Initialize Visitor Showcase
   const showcase = new PortfolioShowcase();

@@ -64,6 +64,7 @@ export class PortfolioShowcase {
     this.lightboxDescription = document.getElementById('lightbox-desc');
     this.lightboxCategoryBadge = document.getElementById('lightbox-category');
     this.lightboxYear = document.getElementById('lightbox-year');
+    this.lightboxCoverYear = document.getElementById('lightbox-cover-year');
     this.lightboxClient = document.getElementById('lightbox-client');
     this.lightboxTools = document.getElementById('lightbox-tools');
     this.lightboxProjectLink = document.getElementById('lightbox-project-link');
@@ -135,10 +136,46 @@ export class PortfolioShowcase {
 
     // Keyboard navigation
     window.addEventListener('keydown', (e) => {
-      if (!this.lightboxModal.classList.contains('active')) return;
+      if (!this.lightboxModal || !this.lightboxModal.classList.contains('active')) return;
       if (e.key === 'Escape') this.closeLightbox();
       if (e.key === 'ArrowLeft') this.navigateLightbox(-1);
       if (e.key === 'ArrowRight') this.navigateLightbox(1);
+    });
+
+    // Curated Chapter Cards & Explore Buttons Click Listener
+    document.querySelectorAll('.chapter-card, .chapter-explore-btn').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const cat = el.dataset.category || el.closest('.chapter-card')?.dataset.category;
+        if (cat) {
+          e.stopPropagation();
+          this.activeCategory = cat;
+          if (this.categoryPillsContainer) {
+            this.categoryPillsContainer.querySelectorAll('.category-pill').forEach(p => {
+              p.classList.toggle('active', p.dataset.category === cat);
+            });
+          }
+          this.renderGallery();
+          const portfolioEl = document.getElementById('portfolio');
+          if (portfolioEl) {
+            portfolioEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Pantone Color Chips Click-to-Copy HEX
+    document.querySelectorAll('.pantone-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const hex = chip.querySelector('.chip-hex')?.textContent || '';
+        const name = chip.querySelector('.chip-name')?.textContent || '';
+        if (hex && navigator.clipboard) {
+          navigator.clipboard.writeText(hex).then(() => {
+            if (window.showToast) {
+              window.showToast(`Kode HEX disalin ke clipboard: ${hex} (${name})`, 'info', 2500);
+            }
+          }).catch(() => {});
+        }
+      });
     });
 
     // Contact Form submission
@@ -400,52 +437,67 @@ export class PortfolioShowcase {
       const isLiked = db.isItemLiked(item.id);
       const categoryObj = this.categories.find(c => c.id === item.category);
       const categoryName = categoryObj ? categoryObj.name : item.category;
-
       const mediaThumb = item.thumbnailUrl || item.videoPoster || item.mediaUrl;
 
       html += `
-        <div class="portfolio-card" data-index="${index}" data-id="${item.id}">
+        <article class="portfolio-card" data-index="${index}" data-id="${item.id}" tabindex="0" aria-label="Buka postingan ${this.escapeHtml(item.title || 'koleksi')}">
           <div class="card-media-wrapper">
-            <img src="${mediaThumb}" alt="${item.title}" class="card-thumbnail" loading="lazy">
+            <img src="${this.escapeAttribute(mediaThumb)}" alt="${this.escapeAttribute(item.title || 'Koleksi busana')}" class="card-thumbnail" loading="lazy">
             <div class="card-media-overlay"></div>
-            
-            <div class="card-badges-top">
-              <span class="badge ${isVideo ? 'badge-video' : 'badge-photo'}">
-                <i class="fas ${isVideo ? 'fa-play' : 'fa-camera'}"></i>
-                ${isVideo ? 'Video Runway' : 'Lookbook'}
-              </span>
-              <span class="badge badge-primary">${categoryName}</span>
+            <div class="feed-card-overlay" aria-hidden="true">
+              <span><i class="fas fa-heart"></i> ${item.likes || 0}</span>
+              <span><i class="fas fa-comment"></i> Detail</span>
             </div>
-
-            ${isVideo ? `
-              <div class="card-play-indicator">
-                <i class="fas fa-play"></i>
-              </div>
-            ` : ''}
+            ${isVideo ? '<span class="feed-video-indicator" aria-label="Video"><i class="fas fa-clone"></i></span>' : ''}
           </div>
-
-          <div class="card-info">
-            <h3 class="card-title">${item.title}</h3>
-            <p class="card-excerpt">${item.excerpt || item.description || ''}</p>
-            
-            <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="card-year"><i class="far fa-calendar-alt"></i> ${item.year || '2024'}</span>
-              ${item.client ? `<span style="font-size: 0.8rem; color: var(--accent-primary);"><i class="fas fa-gem"></i> ${item.client}</span>` : ''}
-            </div>
+          <div class="feed-card-meta">
+            <strong>${this.escapeHtml(item.title || 'Koleksi terbaru')}</strong>
+            <span>${this.escapeHtml(categoryName || 'Koleksi')}</span>
+            <button class="card-like-btn ${isLiked ? 'liked' : ''}" data-id="${this.escapeAttribute(item.id)}" title="Suka postingan ini" aria-label="Suka postingan ini">
+              <i class="${isLiked ? 'fas fa-heart' : 'far fa-heart'}"></i>
+              <span class="likes-count">${item.likes || 0}</span>
+            </button>
           </div>
-        </div>
+        </article>
       `;
     });
 
     this.galleryGrid.innerHTML = html;
 
-    // Attach card click handlers for lightbox
+    // Attach card click handlers for lightbox and like buttons
     this.galleryGrid.querySelectorAll('.portfolio-card').forEach(card => {
+      const index = parseInt(card.dataset.index, 10);
+      const itemId = card.dataset.id;
+      const likeBtn = card.querySelector('.card-like-btn');
+
+      if (likeBtn) {
+        likeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.handleToggleLike(itemId, likeBtn);
+        });
+      }
+
       card.addEventListener('click', () => {
-        const index = parseInt(card.dataset.index, 10);
         this.openLightbox(index);
       });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.openLightbox(index);
+        }
+      });
     });
+  }
+
+  escapeHtml(value) {
+    const element = document.createElement('div');
+    element.textContent = String(value ?? '');
+    return element.innerHTML;
+  }
+
+  escapeAttribute(value) {
+    return this.escapeHtml(value).replace(/`/g, '&#96;');
   }
 
   async handleToggleLike(itemId, btnEl) {
@@ -472,6 +524,7 @@ export class PortfolioShowcase {
     this.renderLightboxContent(item);
     this.lightboxModal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    this.lightboxModal.scrollTop = 0;
   }
 
   renderLightboxContent(item) {
@@ -512,23 +565,24 @@ export class PortfolioShowcase {
       this.lightboxCategoryBadge.className = `badge ${isVideo ? 'badge-video' : 'badge-photo'}`;
     }
     if (this.lightboxYear) this.lightboxYear.textContent = item.year || '-';
+    if (this.lightboxCoverYear) this.lightboxCoverYear.textContent = item.year || '-';
     if (this.lightboxClient) this.lightboxClient.textContent = item.client || '-';
 
     if (this.lightboxTools) {
       if (Array.isArray(item.tools) && item.tools.length > 0) {
-        this.lightboxTools.innerHTML = item.tools.map(t => `<span class="tool-tag"><i class="fas fa-gem"></i> ${t}</span>`).join('');
+        this.lightboxTools.innerHTML = item.tools.map(t => `<span class="lightbox-tool-chip"><i class="fas fa-gem"></i> ${t}</span>`).join('');
       } else {
-        this.lightboxTools.innerHTML = '<span class="tool-tag">Bespoke Couture</span>';
+        this.lightboxTools.innerHTML = '<span class="lightbox-tool-chip">Bespoke Couture</span>';
       }
     }
 
     if (this.lightboxProjectLink) {
-      if (item.projectUrl && item.projectUrl !== '#') {
-        this.lightboxProjectLink.href = item.projectUrl;
-        this.lightboxProjectLink.style.display = 'inline-flex';
-      } else {
-        this.lightboxProjectLink.style.display = 'none';
-      }
+      const whatsappNum = (this.profile && this.profile.whatsapp) ? this.profile.whatsapp.replace(/\D/g, '') : '6281298765432';
+      const brandName = this.profile?.brandName || this.profile?.name || 'Atelier';
+      const msg = encodeURIComponent(`Halo ${brandName}, saya sangat tertarik untuk berkonsultasi mengenai busana "${item.title}" (${item.year || '2026'}).`);
+      this.lightboxProjectLink.href = `https://wa.me/${whatsappNum}?text=${msg}`;
+      this.lightboxProjectLink.innerHTML = '<i class="fab fa-whatsapp"></i> Mulai konsultasi desain';
+      this.lightboxProjectLink.style.display = 'inline-flex';
     }
   }
 
@@ -549,20 +603,24 @@ export class PortfolioShowcase {
 
   handleContactSubmit(e) {
     e.preventDefault();
-    const formData = new FormData(this.contactForm);
+    const nameEl = document.getElementById('contact-name');
+    const emailEl = document.getElementById('contact-email');
+    const typeEl = document.getElementById('contact-type');
+    const msgEl = document.getElementById('contact-msg');
+
     const inquiry = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      subject: formData.get('subject'),
-      message: formData.get('message')
+      name: nameEl ? nameEl.value : '',
+      email: emailEl ? emailEl.value : '',
+      subject: typeEl ? typeEl.value : 'Inquiry Busana',
+      message: msgEl ? msgEl.value : '',
+      createdAt: new Date().toISOString()
     };
 
     db.saveInquiry(inquiry);
     this.contactForm.reset();
 
     if (window.showToast) {
-      window.showToast('Pesan konsultasi berhasil dikirim! Kami akan segera menghubungi Anda.', 'success');
+      window.showToast('Pesan reservasi konsultasi busana berhasil dikirim! Perancang kami akan menghubungi Anda.', 'success', 4000);
     }
   }
 }

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aurelia Dananjaya — Fashion Designer & Atelier</title>
-  <meta name="description" content="Portofolio adibusana, haute couture, kebaya modern, gaun pengantin, dan karya tata busana eksklusif.">
+  <title>Rani Nuraini Atelier — Feed Koleksi</title>
+  <meta name="description" content="Feed koleksi fashion Rani Nuraini Atelier: haute couture, kebaya modern, dan gaun pengantin.">
   <meta name="keywords" content="fashion designer, tata busana, haute couture, kebaya modern, gaun pengantin, atelier, lookbook">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -25,57 +25,425 @@
   <!-- Toast Notification Container -->
   <div id="toast-container"></div>
 
+  <!-- Luxury Editorial Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      
+      <!-- Atelier Brand Logo -->
+      <a href="#home" class="brand-logo">
+        <span class="logo-icon"><i class="fas fa-scissors"></i></span>
+        <div class="brand-text-group">
+          <span id="brand-logo-text" class="brand-title">Rani <span class="gradient-text">Nuraini</span></span>
+          <span class="brand-sub">Haute Couture Atelier</span>
+        </div>
+      </a>
+
+      <!-- Editorial Navigation Links -->
+      <nav class="nav-wrapper">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active"><span class="nav-num">01</span> Cover</a></li>
+          <li><a href="#chapters" class="nav-link"><span class="nav-num">02</span> Bab Koleksi</a></li>
+          <li><a href="#moodboard" class="nav-link"><span class="nav-num">03</span> Moodboard & Kain</a></li>
+          <li><a href="#portfolio" class="nav-link"><span class="nav-num">04</span> Lookbook</a></li>
+          <li><a href="#services" class="nav-link"><span class="nav-num">05</span> Layanan</a></li>
+          <li><a href="#contact" class="nav-link"><span class="nav-num">06</span> Konsultasi</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Theme Switcher Button -->
+        <button id="theme-toggle-btn" class="theme-toggle-btn" title="Ganti Mode Tampilan (Dark/Light)">
+          <i id="theme-toggle-icon" class="fas fa-sun"></i>
+        </button>
+
+        <!-- Studio Manager Access Trigger -->
+        <button id="open-cms-btn" class="admin-switch-btn" title="Akses Studio Pengelola (PIN: 1234)">
+          <i class="fas fa-lock"></i>
+          <span id="admin-btn-label">Studio Access</span>
+        </button>
+
+        <!-- Mobile Drawer Toggle -->
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
   <!-- Main Content Wrapper -->
   <main>
 
-    <!-- Hero Section -->
+    <!-- SECTION 1: Editorial Magazine Cover Hero -->
     <section id="home" class="hero-section">
       <div id="hero-banner-bg" class="hero-banner-bg"></div>
-      <div class="container hero-content">
+      <div class="hero-overlay-gradient"></div>
+
+      <div class="container hero-container">
         
-        <div class="profile-avatar-wrapper">
-          <img id="hero-avatar" src="" alt="Designer Avatar" class="profile-avatar">
+        <!-- Left Editorial Typography Column -->
+        <div class="hero-editorial-col">
+          
+          <div class="editorial-edition-badge">
+            <span class="edition-dot"></span>
+            <span>EDITION // SS-26 ATELIER D'ART</span>
+            <span class="edition-separator">|</span>
+            <span>JAKARTA — BANDUNG — MILAN</span>
+          </div>
+
+          <div class="magazine-kicker">FASHION DESIGN PORTFOLIO</div>
+          
+          <h1 id="hero-name" class="hero-name">Rani Nuraini</h1>
+          
+          <div class="hero-title-wrapper">
+            <div id="hero-title" class="hero-title-role">Fashion Designer & Couturier</div>
+            <div class="status-indicator-badge">
+              <span class="status-dot"></span>
+              <span id="status-badge-text">Menerima Pesanan Custom & Fitting</span>
+            </div>
+          </div>
+
+          <p id="hero-bio" class="hero-bio">
+            Spesialis dalam perancangan busana custom-made, haute couture, kebaya modern kontemporer, dan gaun pesta eksklusif dengan detail jahitan presisi tinggi.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#portfolio" class="btn btn-primary btn-lg">
+              <i class="fas fa-sparkles"></i> Eksplorasi Lookbook
+            </a>
+            <a href="#contact" class="btn btn-outline btn-lg">
+              <i class="fas fa-envelope-open-text"></i> Konsultasi Fitting
+            </a>
+          </div>
+
+          <!-- Social Media Links -->
+          <div id="social-links-bar" class="social-links-bar"></div>
+
+          <!-- Quick Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div id="stat-exp" class="stat-number">6+</div>
+              <div class="stat-label">Tahun Pengalaman Atelier</div>
+            </div>
+            <div class="stat-item">
+              <div id="stat-proj" class="stat-number">140+</div>
+              <div class="stat-label">Karya Busana Tercipta</div>
+            </div>
+            <div class="stat-item">
+              <div id="stat-clients" class="stat-number">95+</div>
+              <div class="stat-label">Klien Puas & Pengantin</div>
+            </div>
+            <div class="stat-item">
+              <div id="stat-total-items" class="stat-number">12</div>
+              <div class="stat-label">Total Busana di Galeri</div>
+            </div>
+          </div>
+
         </div>
 
-        <h1 id="hero-name" class="hero-name">Aurelia Dananjaya</h1>
-        <div id="hero-title" class="hero-title-role">Fashion Designer & Couturier</div>
-        <p id="hero-bio" class="hero-bio">
-          Spesialis dalam perancangan busana custom-made, haute couture, kebaya modern kontemporer, dan gaun pesta eksklusif dengan detail jahitan presisi tinggi.
-        </p>
+        <!-- Right Magazine Cover Showcase Portrait -->
+        <div class="hero-visual-col">
+          <div class="magazine-frame">
+            <div class="frame-tag-top">LOOKBOOK COVER // VOL. IV</div>
+            
+            <div class="magazine-image-wrapper">
+              <img id="hero-avatar" src="" alt="Designer Avatar" class="profile-avatar">
+              <div class="frame-vignette"></div>
+            </div>
 
-        <div class="hero-cta-group">
-          <a href="#portfolio" class="btn btn-primary btn-lg">
-            <i class="fas fa-sparkles"></i> Lihat Lookbook Koleksi
-          </a>
-        </div>
+            <!-- Floating Swatch Tag -->
+            <div class="floating-spec-card">
+              <div class="spec-card-icon"><i class="fas fa-gem"></i></div>
+              <div class="spec-card-info">
+                <span class="spec-label">Primary Textile</span>
+                <strong class="spec-val">Pure Silk Organza & Chantilly</strong>
+              </div>
+            </div>
 
-        <!-- Social Media Links -->
-        <div id="social-links-bar" class="social-links-bar"></div>
-
-        <!-- Quick Stats Grid -->
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div id="stat-exp" class="stat-number">6+</div>
-            <div class="stat-label">Tahun Pengalaman Atelier</div>
-          </div>
-          <div class="stat-item">
-            <div id="stat-proj" class="stat-number">140+</div>
-            <div class="stat-label">Karya Busana Tercipta</div>
-          </div>
-          <div class="stat-item">
-            <div id="stat-clients" class="stat-number">95+</div>
-            <div class="stat-label">Klien Puas & Pengantin</div>
-          </div>
-          <div class="stat-item">
-            <div id="stat-total-items" class="stat-number">12</div>
-            <div class="stat-label">Total Busana di Galeri</div>
+            <div class="frame-tag-bottom">
+              <span>BESPOKE TAILORING</span>
+              <span>100% HANDCRAFTED</span>
+            </div>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- Portfolio Showcase Section -->
+    <!-- SECTION 2: Curated Chapters Index (Direct Behance 01-05 Inspiration) -->
+    <section id="chapters" class="section chapters-section">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fas fa-bookmark"></i> Curated Chapters</span>
+          <h2 class="section-title">5 Pilar <span class="gradient-text">Koleksi Adibusana</span></h2>
+          <p class="section-subtitle">Setiap bab merepresentasikan eksplorasi material, filosofi siluet, dan ketelitian teknik adibusana tersendiri.</p>
+        </div>
+
+        <!-- 5 Tall Vertical Pill Cards Grid -->
+        <div class="chapters-grid">
+          
+          <!-- Chapter 01 -->
+          <div class="chapter-card" data-category="couture">
+            <div class="chapter-card-bg" style="background-image: url('https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="chapter-card-overlay"></div>
+            <div class="chapter-content">
+              <span class="chapter-num">01</span>
+              <div class="chapter-meta">
+                <span class="chapter-badge">Haute Couture</span>
+                <h3 class="chapter-title">Lumina & Sculptural Gowns</h3>
+                <p class="chapter-desc">Gaun malam berstruktur mikro-pleating dramatis dari sutra organza murni & taburan kristal Swarovski.</p>
+                <button class="chapter-explore-btn" data-category="couture">
+                  Lihat Koleksi <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chapter 02 -->
+          <div class="chapter-card" data-category="kebaya">
+            <div class="chapter-card-bg" style="background-image: url('https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="chapter-card-overlay"></div>
+            <div class="chapter-content">
+              <span class="chapter-num">02</span>
+              <div class="chapter-meta">
+                <span class="chapter-badge">Heritage Modern</span>
+                <h3 class="chapter-title">The Royal Kebaya Etnik</h3>
+                <p class="chapter-desc">Perpaduan brokat Chantilly Perancis dengan tenun ikat sutra nusantara berpotongan kontemporer.</p>
+                <button class="chapter-explore-btn" data-category="kebaya">
+                  Lihat Koleksi <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chapter 03 -->
+          <div class="chapter-card" data-category="bridal">
+            <div class="chapter-card-bg" style="background-image: url('https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="chapter-card-overlay"></div>
+            <div class="chapter-content">
+              <span class="chapter-num">03</span>
+              <div class="chapter-meta">
+                <span class="chapter-badge">Bespoke Bridal</span>
+                <h3 class="chapter-title">Elysian Wedding Gowns</h3>
+                <p class="chapter-desc">Gaun pengantin impian berpalet ivory, boning korset internal presisi, dan aplikasi lace bordir 3D.</p>
+                <button class="chapter-explore-btn" data-category="bridal">
+                  Lihat Koleksi <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chapter 04 -->
+          <div class="chapter-card" data-category="readytowear">
+            <div class="chapter-card-bg" style="background-image: url('https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="chapter-card-overlay"></div>
+            <div class="chapter-content">
+              <span class="chapter-num">04</span>
+              <div class="chapter-meta">
+                <span class="chapter-badge">Capsule Edition</span>
+                <h3 class="chapter-title">Urban Minimalist Tailoring</h3>
+                <p class="chapter-desc">Busana kasual elegan berbahan serat alami linen & katun twill dengan siluet rileks & fungsional.</p>
+                <button class="chapter-explore-btn" data-category="readytowear">
+                  Lihat Koleksi <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chapter 05 -->
+          <div class="chapter-card" data-category="runway">
+            <div class="chapter-card-bg" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="chapter-card-overlay"></div>
+            <div class="chapter-content">
+              <span class="chapter-num">05</span>
+              <div class="chapter-meta">
+                <span class="chapter-badge">Catwalk & Video</span>
+                <h3 class="chapter-title">Runway & Motion Gallery</h3>
+                <p class="chapter-desc">Sinematografi panggung catwalk mode menangkap dinamika drape kain sutra saat bergerak bebas.</p>
+                <button class="chapter-explore-btn" data-category="runway">
+                  Lihat Koleksi <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: Atelier Concept & Moodboard Board -->
+    <section id="moodboard" class="section moodboard-section">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-palette"></i> Atelier Archive</span>
+          <h2 class="section-title">Konsep, <span class="gradient-text">Palet & Tekstil</span> Adibusana</h2>
+          <p class="section-subtitle">Di balik setiap gaun terdapat eksplorasi harmonisasi warna Pantone Fashion System, kurasi kain tekstil eksklusif, dan sketsa teknis.</p>
+        </div>
+
+        <div class="moodboard-grid">
+          
+          <!-- Board Card 1: Pantone Color System Chips -->
+          <div class="moodboard-card pantone-board">
+            <div class="card-inner-header">
+              <span class="card-kicker">COLOR FORMULATION</span>
+              <h3 class="card-headline">Pantone Fashion Palette</h3>
+            </div>
+
+            <p class="board-caption">
+              Palet warna khas Atelier yang dirumuskan secara khusus untuk memancarkan kehangatan kulit dan kemewahan alami saat terkena sorotan lampu panggung.
+            </p>
+
+            <div class="pantone-chips-list">
+              
+              <div class="pantone-chip" style="--chip-color: #0E0D0C;" title="Klik untuk salin HEX">
+                <div class="chip-color-block"></div>
+                <div class="chip-info">
+                  <span class="chip-code">PANTONE 19-3911 TCX</span>
+                  <strong class="chip-name">Deep Caviar Noir</strong>
+                  <span class="chip-hex">#0E0D0C</span>
+                </div>
+              </div>
+
+              <div class="pantone-chip" style="--chip-color: #E8DFC8;" title="Klik untuk salin HEX">
+                <div class="chip-color-block"></div>
+                <div class="chip-info">
+                  <span class="chip-code">PANTONE 14-1118 TCX</span>
+                  <strong class="chip-name">Warm Ecru Silk</strong>
+                  <span class="chip-hex">#E8DFC8</span>
+                </div>
+              </div>
+
+              <div class="pantone-chip" style="--chip-color: #C5A880;" title="Klik untuk salin HEX">
+                <div class="chip-color-block"></div>
+                <div class="chip-info">
+                  <span class="chip-code">PANTONE 16-1325 TCX</span>
+                  <strong class="chip-name">Antique Champagne</strong>
+                  <span class="chip-hex">#C5A880</span>
+                </div>
+              </div>
+
+              <div class="pantone-chip" style="--chip-color: #F8F6F0;" title="Klik untuk salin HEX">
+                <div class="chip-color-block"></div>
+                <div class="chip-info">
+                  <span class="chip-code">PANTONE 11-0601 TCX</span>
+                  <strong class="chip-name">Chantilly Blanc</strong>
+                  <span class="chip-hex">#F8F6F0</span>
+                </div>
+              </div>
+
+              <div class="pantone-chip" style="--chip-color: #8C2A3E;" title="Klik untuk salin HEX">
+                <div class="chip-color-block"></div>
+                <div class="chip-info">
+                  <span class="chip-code">PANTONE 19-1763 TCX</span>
+                  <strong class="chip-name">Couture Crimson</strong>
+                  <span class="chip-hex">#8C2A3E</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Board Card 2: Fabric Swatches & Macro Material Explorer -->
+          <div class="moodboard-card textiles-board">
+            <div class="card-inner-header">
+              <span class="card-kicker">TEXTILE CURATION</span>
+              <h3 class="card-headline">Material & Fabric Archive</h3>
+            </div>
+
+            <p class="board-caption">
+              Hanya material serat murni pilihan dari sentra adibusana dunia yang digunakan, diproses dengan teknik boning korset dan finishing tangan presisi.
+            </p>
+
+            <div class="fabric-swatches-grid">
+              
+              <div class="fabric-item">
+                <div class="fabric-preview" style="background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=400&q=80');">
+                  <span class="fabric-origin">France</span>
+                </div>
+                <div class="fabric-details">
+                  <h4>Chantilly Brocade Lace</h4>
+                  <p>Renda anyaman benang sutra halus buatan tangan dari Calais-Caudry dengan motif floral elegan.</p>
+                </div>
+              </div>
+
+              <div class="fabric-item">
+                <div class="fabric-preview" style="background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=400&q=80');">
+                  <span class="fabric-origin">Italy</span>
+                </div>
+                <div class="fabric-details">
+                  <h4>Pure Silk Organza</h4>
+                  <p>Kain sutra tipis kaku berdaya tahan tinggi, sempurna untuk struktur rok bervolume 35 meter.</p>
+                </div>
+              </div>
+
+              <div class="fabric-item">
+                <div class="fabric-preview" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80');">
+                  <span class="fabric-origin">Austria</span>
+                </div>
+                <div class="fabric-details">
+                  <h4>Swarovski Crystals & Pearls</h4>
+                  <p>Kristal potong presisi dan mutiara air tawar alami yang dipasang payet satu per satu dengan tangan.</p>
+                </div>
+              </div>
+
+              <div class="fabric-item">
+                <div class="fabric-preview" style="background-image: url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=400&q=80');">
+                  <span class="fabric-origin">Indonesia</span>
+                </div>
+                <div class="fabric-details">
+                  <h4>Tenun Ikat Sutra Nusantara</h4>
+                  <p>Tenun tangan tradisional dengan benang sutra alami bermotif geometris warisan adiluhung.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Board Card 3: Croquis to Garment (Fashion Sketch Exploration) -->
+          <div class="moodboard-card sketch-board">
+            <div class="card-inner-header">
+              <span class="card-kicker">DESIGN JOURNEY</span>
+              <h3 class="card-headline">Dari Sketsa Croquis Menuju Gaun Jadi</h3>
+            </div>
+
+            <div class="croquis-showcase-box">
+              <div class="croquis-step">
+                <div class="step-num-tag">Tahap 01 // Croquis Flat</div>
+                <div class="croquis-img-box">
+                  <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=600&q=80" alt="Fashion Croquis Sketch" class="croquis-img">
+                </div>
+                <span class="croquis-caption">Sketsa proporsi figur 9-head croquis & draperi awal</span>
+              </div>
+
+              <div class="croquis-step">
+                <div class="step-num-tag">Tahap 02 // Fitting Adibusana</div>
+                <div class="croquis-img-box">
+                  <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&q=80" alt="Finished Couture Garment" class="croquis-img">
+                </div>
+                <span class="croquis-caption">Karya akhir dengan hand-beading kristal & boning</span>
+              </div>
+            </div>
+
+            <div class="atelier-quote-box">
+              <i class="fas fa-quote-left quote-icon"></i>
+              <p class="quote-text">
+                "Sebuah gaun adibusana bukan sekadar pakaian yang dijahit, melainkan arsitektur kain yang memeluk keunikan jiwa pemakainya."
+              </p>
+              <span class="quote-author">— Rani Nuraini, Creative Director</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: Portfolio Lookbook Gallery -->
     <section id="portfolio" class="section portfolio-section">
       <div class="container">
         
@@ -85,45 +453,201 @@
           <p class="section-subtitle">Koleksi adibusana pilihan mulai dari haute couture, kebaya modern, gaun pengantin, hingga ready-to-wear elegan.</p>
         </div>
 
-        <!-- Search Toolbar -->
-        <div class="portfolio-filter-wrapper" style="margin-bottom: 2rem;">
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
-            
+        <!-- Search Toolbar & Category Pills -->
+        <div class="portfolio-filter-wrapper">
+          
+          <div class="filter-top-row">
             <!-- Live Search Box -->
-            <div class="search-box-wrapper" style="flex: 1; max-width: 550px;">
+            <div class="search-box-wrapper">
               <i class="fas fa-search search-icon"></i>
-              <input type="text" id="portfolio-search" class="portfolio-search-input" placeholder="Cari nama busana, bahan kain, acara, atau deskripsi...">
+              <input type="text" id="portfolio-search" class="portfolio-search-input" placeholder="Cari nama gaun, bahan kain (sutra, brokat), acara, atau koleksi...">
               <button id="search-clear-btn" class="search-clear-btn" title="Hapus Pencarian">
                 <i class="fas fa-times"></i>
               </button>
             </div>
 
-            <div style="font-size: 0.9rem; color: var(--text-muted);">
-              <span id="results-count">Menampilkan 0 busana</span>
+            <div class="results-meta">
+              <span id="results-count" class="results-count-badge">Menampilkan 0 busana</span>
             </div>
-
           </div>
+
+          <!-- Dynamic Category Pills -->
+          <div id="category-pills" class="category-pills-container"></div>
+
         </div>
 
-        <!-- Portfolio Cards Grid -->
+        <!-- Portfolio Cards Grid (Editorial Asymmetrical Lookbook) -->
         <div id="portfolio-grid" class="portfolio-grid"></div>
 
       </div>
     </section>
 
+    <!-- SECTION 5: Atelier Services & Bespoke Commission -->
+    <section id="services" class="section services-section">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fas fa-gem"></i> Bespoke Services</span>
+          <h2 class="section-title">Layanan <span class="gradient-text">Rancang Busana Eksklusif</span></h2>
+          <p class="section-subtitle">Setiap pesanan ditangani langsung oleh sang perancang busana mulai dari konsultasi siluet, pemilihan bahan impor, hingga fitting personal.</p>
+        </div>
 
+        <div id="services-grid" class="services-grid"></div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6: Private Atelier Consultation & Contact -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        
+        <div class="contact-card-wrapper">
+          
+          <!-- Left: Contact Details -->
+          <div class="contact-info-col">
+            <span class="section-tag"><i class="fas fa-envelope-open-text"></i> Private Appointment</span>
+            <h2 class="contact-title">Jadwalkan Konsultasi <span class="gradient-text">Busana Impian</span> Anda</h2>
+            <p class="contact-desc">
+              Kunjungi atelier kami untuk konsultasi privat, pengukuran tubuh personal (*custom bespoke fitting*), dan eksplorasi material kain adibusana langsung.
+            </p>
+
+            <div class="contact-details-list">
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                <div>
+                  <span class="contact-label">Email Atelier</span>
+                  <div id="contact-email-val" class="contact-val">rani.nuraini@example.com</div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                <div>
+                  <span class="contact-label">Telepon / WhatsApp</span>
+                  <div id="contact-phone-val" class="contact-val">+62 812-9876-5432</div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-location-dot"></i></div>
+                <div>
+                  <span class="contact-label">Lokasi Studio Atelier</span>
+                  <div id="contact-loc-val" class="contact-val">Jakarta Selatan & Bandung, Indonesia</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="whatsapp-cta-box">
+              <a id="whatsapp-direct-btn" href="#" target="_blank" class="btn btn-primary btn-lg" style="width: 100%;">
+                <i class="fab fa-whatsapp"></i> Chat WhatsApp Direct Studio
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Direct Inquiry Form -->
+          <div class="contact-form-col">
+            <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Kirim Pesan Konsultasi</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+              Isi formulir di bawah ini dan perancang kami akan segera menghubungi Anda dalam 24 jam.
+            </p>
+
+            <form id="contact-form" class="editorial-contact-form">
+              <div class="form-group">
+                <label class="form-label" for="contact-name">Nama Lengkap *</label>
+                <input type="text" id="contact-name" class="form-input" placeholder="e.g. Raden Ayu Sarah" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="contact-email">Alamat Email *</label>
+                <input type="email" id="contact-email" class="form-input" placeholder="sarah@example.com" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="contact-type">Kategori Busana yang Diminati</label>
+                <select id="contact-type" class="form-select">
+                  <option value="couture">Haute Couture & Gaun Malam</option>
+                  <option value="bridal">Gaun Pengantin & Wedding Gown</option>
+                  <option value="kebaya">Kebaya Modern & Etnik Nusantara</option>
+                  <option value="readytowear">Ready-to-Wear Capsule</option>
+                  <option value="styling">Fashion Styling & Editorial Direction</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="contact-msg">Ceritakan Konsep Busana & Tanggal Acara</label>
+                <textarea id="contact-msg" class="form-textarea" rows="4" placeholder="Jelaskan kebutuhan acara, preferensi warna, dan perkiraan tanggal pemakaian busana..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                <i class="fas fa-paper-plane"></i> Kirim Pesan Reservasi
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
 
   </main>
+
+  <!-- Luxury Editorial Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      
+      <div class="footer-top-row">
+        <div class="footer-brand-block">
+          <div class="footer-logo">
+            <span class="logo-icon"><i class="fas fa-scissors"></i></span>
+            <span id="footer-brand-name" class="footer-brand-title">Rani Nuraini</span>
+          </div>
+          <p class="footer-tagline">
+            Haute Couture, Modern Kebaya & Bespoke Tailoring Atelier. Mendedikasikan presisi jahitan untuk keanggunan abadi.
+          </p>
+        </div>
+
+        <div class="footer-links-block">
+          <h4 class="footer-heading">Navigasi Halaman</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#home">Cover Depan</a></li>
+            <li><a href="#chapters">5 Bab Koleksi</a></li>
+            <li><a href="#moodboard">Moodboard & Tekstil</a></li>
+            <li><a href="#portfolio">Lookbook Adibusana</a></li>
+            <li><a href="#services">Layanan Atelier</a></li>
+            <li><a href="#contact">Kontak Privat</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-block">
+          <h4 class="footer-heading">Studio Atelier</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
+            Atelier Jakarta: Dharmawangsa Square, Lantai 2<br>
+            Atelier Bandung: Jalan R.E. Martadinata<br>
+            Kunjungan studio hanya melalui reservasi jadwal privat.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div class="copyright-text">
+          &copy; <span id="footer-year">2026</span> <span id="footer-custom-text">Hak cipta busana & desain dilindungi undang-undang.</span>
+        </div>
+
+        <div class="footer-status-pill">
+          <span class="status-dot"></span>
+          <span>Atelier Aktif & Menerima Pesanan Baru</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
 
   <!-- =========================================================================
        MODALS & CMS PANELS
        ========================================================================= -->
 
-  <!-- 1. Lightbox Media Modal (Public Viewer) -->
+  <!-- 1. Collection Dossier (Public Viewer) -->
   <div id="lightbox-modal" class="lightbox-modal">
-    <button id="lightbox-close-btn" class="lightbox-close-btn" title="Tutup (Esc)">
-      <i class="fas fa-times"></i>
-    </button>
     <button id="lightbox-prev-btn" class="lightbox-nav-btn prev" title="Sebelumnya (←)">
       <i class="fas fa-chevron-left"></i>
     </button>
@@ -132,18 +656,31 @@
     </button>
 
     <div class="lightbox-container">
+      <div class="dossier-topbar">
+        <span><i class="fas fa-scissors"></i> RANI NURAINI ATELIER</span>
+        <span>ARCHIVE / SELECTED WORK</span>
+      </div>
+      <header class="dossier-cover">
+        <div class="dossier-cover-inner">
+          <button id="lightbox-close-btn" class="lightbox-close-btn dossier-back-btn" aria-label="Kembali ke arsip koleksi">
+            <i class="fas fa-arrow-left"></i><span>Kembali ke arsip</span>
+          </button>
+          <span id="lightbox-category" class="badge badge-primary">Haute Couture</span>
+          <p class="dossier-cover-label">FASHION DESIGN PORTFOLIO</p>
+          <h1 id="lightbox-title" class="lightbox-title">Judul Busana</h1>
+          <p class="dossier-cover-credit">RANI NURAINI ATELIER <span>•</span> <span id="lightbox-cover-year">2024</span></p>
+        </div>
+      </header>
       <div id="lightbox-media-box" class="lightbox-media-box">
         <!-- Media Image or Video dynamic -->
       </div>
       <div class="lightbox-info-box">
-        
-        <div class="lightbox-meta-row">
-          <span id="lightbox-category" class="badge badge-primary">Haute Couture</span>
-        </div>
+        <div class="dossier-kicker">RANI NURAINI / PROJECT NOTE</div>
 
-        <h2 id="lightbox-title" class="lightbox-title">Judul Busana</h2>
+        <div class="dossier-section-label"><span>01</span> CREATIVE DIRECTION</div>
         <p id="lightbox-desc" class="lightbox-description">Deskripsi lengkap karya.</p>
 
+        <div class="dossier-section-label"><span>02</span> PROJECT FACTS</div>
         <div class="lightbox-details-list">
           <div>
             <div class="details-item-label">Tahun / Musim</div>
@@ -155,16 +692,23 @@
           </div>
         </div>
 
-        <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">
-          Material Kain & Detail Pengerjaan
-        </div>
-        <div id="lightbox-tools" class="lightbox-tools-tags"></div>
+        <section class="dossier-material-block">
+          <div class="dossier-section-label"><span>03</span> MATERIAL LIBRARY</div>
+          <p class="dossier-material-intro">Elemen pilihan yang membentuk karakter, tekstur, dan siluet karya ini.</p>
+          <div id="lightbox-tools" class="lightbox-tools-tags"></div>
+        </section>
 
-        <div class="lightbox-actions">
-          <a id="lightbox-project-link" href="#" target="_blank" class="btn btn-primary btn-sm">
-            <i class="fas fa-external-link-alt"></i> Tautan Detail Koleksi
-          </a>
-        </div>
+        <section class="dossier-contact-block">
+          <div class="dossier-section-label"><span>04</span> YOUR COMMISSION</div>
+          <p>Terinspirasi oleh pendekatan karya ini? Mari mulai percakapan untuk rancangan yang dibuat khusus untuk Anda.</p>
+          <div class="lightbox-actions">
+            <a id="lightbox-project-link" href="#" target="_blank" class="btn btn-primary btn-sm">
+              <i class="fas fa-external-link-alt"></i> Tautan Detail Koleksi
+            </a>
+          </div>
+        </section>
+
+        <p class="dossier-help"><i class="fas fa-circle-info"></i> Tekan Esc untuk kembali ke arsip koleksi.</p>
 
       </div>
     </div>
@@ -222,7 +766,7 @@
         <div class="cms-brand">
           <div class="logo-icon" style="width:36px; height:36px; font-size: 1rem;"><i class="fas fa-scissors"></i></div>
           <div>
-            <div id="cms-brand-name" style="font-weight: 800; font-size: 1.1rem; line-height: 1.2;">Aurelia Atelier</div>
+            <div id="cms-brand-name" style="font-weight: 800; font-size: 1.1rem; line-height: 1.2;">Rani Nuraini Atelier</div>
             <span class="cms-brand-badge">Studio Panel</span>
           </div>
         </div>
@@ -386,7 +930,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label">Nama Brand / Logo (Header)</label>
-                    <input type="text" id="profile-brand-name" class="form-input" placeholder="e.g. Aurelia Atelier">
+                    <input type="text" id="profile-brand-name" class="form-input" placeholder="contoh: Rani Nuraini Atelier">
                   </div>
                 </div>
 
