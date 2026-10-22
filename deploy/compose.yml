@@ -1,0 +1,17 @@
+# Run migrations/owner setup from the source checkout before starting the web container.
+# DATABASE_URL etc. point to your existing LOCAL PostgreSQL server.
+services:
+  portfolio:
+    build:
+      context: ..
+    restart: unless-stopped
+    env_file: ../.env.production
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - portfolio_media:/app/storage/media
+    # Linux: host.docker.internal reaches PostgreSQL on this same server.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+volumes:
+  portfolio_media:

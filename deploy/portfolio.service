@@ -1,0 +1,25 @@
+[Unit]
+Description=ch-fitra portfolio
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=portfolio
+Group=portfolio
+WorkingDirectory=/srv/portfolio
+Environment=NODE_ENV=production
+Environment=HOSTNAME=127.0.0.1
+Environment=PORT=3000
+EnvironmentFile=/etc/portfolio/runtime.env
+ExecStart=/usr/bin/node /srv/portfolio/server.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/portfolio/storage
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
