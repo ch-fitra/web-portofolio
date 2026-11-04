@@ -96,7 +96,7 @@ const url = (role, password) =>
   `postgresql://${role}:${password}@127.0.0.1:55432/portfolio`;
 await writeFile(
   ".env.local",
-  `DATABASE_URL=${url("portfolio_public", randomBytes(24).toString("hex"))}\nOWNER_DATABASE_URL=${url("portfolio_owner", randomBytes(24).toString("hex"))}\nAUTH_DATABASE_URL=${url("portfolio_auth", randomBytes(24).toString("hex"))}\nMIGRATION_DATABASE_URL=${url("portfolio_migrator", admin)}\nSITE_URL=http://localhost:3000\nMEDIA_ROOT=./storage/media\nIP_HASH_SECRET=${randomBytes(32).toString("hex")}\nTRUST_PROXY=false\n`,
+  `DATABASE_URL=${url("portfolio_public", randomBytes(24).toString("hex"))}\nOWNER_DATABASE_URL=${url("portfolio_owner", randomBytes(24).toString("hex"))}\nAUTH_DATABASE_URL=${url("portfolio_auth", randomBytes(24).toString("hex"))}\nMIGRATION_DATABASE_URL=${url("portfolio_migrator", admin)}\nSITE_URL=http://localhost:3000\nMEDIA_ROOT=./storage/media\nIP_HASH_SECRET=${randomBytes(32).toString("hex")}\nADMIN_PASSWORD=${randomBytes(24).toString("hex")}\nTRUST_PROXY=false\n`,
   { mode: 0o600, flag: "wx" },
 );
 console.log(

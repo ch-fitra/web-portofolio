@@ -3,15 +3,21 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createHmac } from "node:crypto";
 import { db } from "./db";
-import { hashToken } from "./password";
+import { hashSessionToken } from "./password";
 export const cookieName = "portfolio_session";
 export async function currentOwner() {
   const token = (await cookies()).get(cookieName)?.value;
-  if (!token || !/^[a-f0-9]{64}$/.test(token) || !process.env.AUTH_DATABASE_URL)
+  const password = process.env.ADMIN_PASSWORD;
+  if (
+    !password ||
+    !token ||
+    !/^[a-f0-9]{64}$/.test(token) ||
+    !process.env.AUTH_DATABASE_URL
+  )
     return null;
   const { rows } = await db("auth").query(
     "SELECT o.id,o.email FROM sessions s JOIN owners o ON o.id=s.owner_id WHERE s.token_hash=$1 AND s.expires_at>now()",
-    [hashToken(token)],
+    [hashSessionToken(token, password)],
   );
   return rows[0] as { id: string; email: string } | undefined;
 }

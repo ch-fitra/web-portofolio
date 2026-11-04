@@ -24,7 +24,6 @@ export default async function StudioLayout({
             ["skills", "Skills"],
             ["certifications", "Certifications"],
             ["media", "Media library"],
-            ["inbox", "Contact inbox"],
             ["settings", "Site settings"],
           ].map(([path, label]) => (
             <Link key={path} href={`/admin${path ? `/${path}` : ""}`}>

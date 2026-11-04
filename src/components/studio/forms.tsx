@@ -20,24 +20,12 @@ import type {
 } from "@/lib/schema";
 import type { Media } from "@/lib/content";
 export function LoginForm() {
-  const [email, setEmail] = useState("");
   const [state, action, pending] = useActionState(login, {
     ok: false,
     message: "",
   });
   return (
     <form action={action} className="stack">
-      <label>
-        Email
-        <input
-          name="email"
-          type="email"
-          autoComplete="username"
-          required
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </label>
       <label>
         Password
         <input
@@ -56,10 +44,7 @@ export function LoginForm() {
           {state.message}
         </p>
       )}
-      <p className="small muted">
-        Owner access only. To reset credentials, use the server’s owner:setup
-        command.
-      </p>
+      <p className="small muted">Private access to Owner Studio.</p>
     </form>
   );
 }
@@ -187,11 +172,19 @@ export function ProfileEditor({
               "email",
               "github",
               "linkedin",
+              "instagram",
             ] as const
           ).map((k) => (
             <Field
               key={k}
               label={k}
+              type={
+                k === "email"
+                  ? "email"
+                  : ["github", "linkedin", "instagram"].includes(k)
+                    ? "url"
+                    : "text"
+              }
               value={data[k]}
               onChange={(v) => set(k, v)}
             />
@@ -432,22 +425,7 @@ export function SettingsEditor({ initial }: { initial: Settings }) {
               ))}
             </select>
           </label>
-          <Field
-            label="Contact retention (days)"
-            type="number"
-            min={1}
-            max={3650}
-            value={data.retentionDays}
-            onChange={(v) =>
-              setData((d) => ({ ...d, retentionDays: Number(v) }))
-            }
-          />
         </div>
-        <p className="muted small">
-          Update the privacy wording when changing retention. Run the retention
-          command on a schedule to enforce deletion. The AI assistant is
-          deferred to Phase 2.
-        </p>
       </div>
       <button className="button button-light" disabled={pending}>
         {pending ? "Saving…" : "Save settings"}

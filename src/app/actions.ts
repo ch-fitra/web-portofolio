@@ -6,9 +6,12 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { clientKey, consumeLimit, cookieName, requireOwner } from "@/lib/auth";
-import { hashToken, verifyPassword } from "@/lib/password";
 import {
-  contactSchema,
+  hashToken,
+  hashSessionToken,
+  verifyAdminPassword,
+} from "@/lib/password";
+import {
   profileSchema,
   projectSchema,
   recordSchema,
@@ -22,31 +25,30 @@ export async function login(
   form: FormData,
 ): Promise<ActionResult> {
   const parsed = z
-    .object({ email: z.email().max(254), password: z.string().min(1).max(256) })
+    .object({ password: z.string().min(1).max(256) })
     .safeParse(Object.fromEntries(form));
-  if (!parsed.success) return failure("Check your email and password.");
+  if (!parsed.success) return failure("Check your password.");
   try {
-    const email = parsed.data.email.toLowerCase();
-    const [ipAllowed, emailAllowed] = await Promise.all([
+    const configuredPassword = process.env.ADMIN_PASSWORD;
+    if (!configuredPassword) throw Error("ADMIN_PASSWORD is required");
+    const [ipAllowed, studioAllowed] = await Promise.all([
       consumeLimit(await clientKey("login"), 10, 900),
-      consumeLimit(hashToken(`login-email:${email}`), 10, 900),
+      consumeLimit(hashToken("login-studio"), 30, 900),
     ]);
-    if (!ipAllowed || !emailAllowed)
+    if (!ipAllowed || !studioAllowed)
       return failure("Too many attempts. Try again in 15 minutes.");
-    const { rows } = await db("auth").query(
-      "SELECT id,password_hash FROM owners WHERE email=$1",
-      [email],
+    if (!verifyAdminPassword(parsed.data.password, configuredPassword))
+      return failure("Check your password.");
+    const ownerId = "00000000-0000-4000-8000-000000000001";
+    await db("auth").query(
+      "INSERT INTO owners(id,email,password_hash) VALUES($1,'owner@portfolio.local','env-managed') ON CONFLICT(id) DO NOTHING",
+      [ownerId],
     );
-    const valid = verifyPassword(
-      parsed.data.password,
-      rows[0]?.password_hash || `${"0".repeat(32)}:${"0".repeat(128)}`,
-    );
-    if (!rows[0] || !valid) return failure("Check your email and password.");
     const token = randomBytes(32).toString("hex");
     await db("auth").query("DELETE FROM sessions WHERE expires_at<now()");
     await db("auth").query(
       "INSERT INTO sessions(token_hash,owner_id,expires_at) VALUES($1,$2,now()+interval '12 hours')",
-      [hashToken(token), rows[0].id],
+      [hashSessionToken(token, configuredPassword), ownerId],
     );
     (await cookies()).set(cookieName, token, {
       httpOnly: true,
@@ -65,9 +67,9 @@ export async function login(
 export async function logout() {
   const jar = await cookies();
   const token = jar.get(cookieName)?.value;
-  if (token)
+  if (token && process.env.ADMIN_PASSWORD)
     await db("auth").query("DELETE FROM sessions WHERE token_hash=$1", [
-      hashToken(token),
+      hashSessionToken(token, process.env.ADMIN_PASSWORD),
     ]);
   jar.delete(cookieName);
   redirect("/admin/login");
@@ -208,95 +210,4 @@ export async function deleteRecord(id: string): Promise<ActionResult> {
   await db("owner").query("DELETE FROM records WHERE id=$1", [id]);
   revalidatePath("/", "layout");
   return { ok: true, message: "Item deleted." };
-}
-export async function updateMessage(
-  id: string,
-  status: string,
-): Promise<ActionResult> {
-  await requireOwner();
-  if (
-    !uuid.safeParse(id).success ||
-    !["read", "unread", "archived", "spam", "delete"].includes(status)
-  )
-    return failure("Invalid action.");
-  if (status === "delete")
-    await db("owner").query("DELETE FROM messages WHERE id=$1", [id]);
-  else
-    await db("owner").query("UPDATE messages SET status=$2 WHERE id=$1", [
-      id,
-      status,
-    ]);
-  revalidatePath("/admin/inbox");
-  return {
-    ok: true,
-    message: status === "delete" ? "Message deleted." : "Message updated.",
-  };
-}
-export async function submitContact(
-  _: ActionResult,
-  form: FormData,
-): Promise<ActionResult> {
-  const input = Object.fromEntries(form);
-  const parsed = contactSchema.safeParse({
-    ...input,
-    consent: input.consent === "on",
-  });
-  if (!parsed.success)
-    return failure(
-      "Please complete all fields, use a valid email, and write at least 20 characters.",
-    );
-  try {
-    if (!(await consumeLimit(await clientKey("contact"), 5, 3600)))
-      return failure("Too many messages. Please try again in an hour.");
-    const d = parsed.data;
-    const { rows } = await db("owner").query(
-      "INSERT INTO messages(name,email,type,message,budget,timeline) VALUES($1,$2,$3,$4,$5,$6) RETURNING id",
-      [d.name, d.email, d.type, d.message, d.budget, d.timeline],
-    );
-    let notification = "not_configured";
-    // Optional server-owned email relay contract: HTTP 2xx must mean provider accepted delivery.
-    if (process.env.EMAIL_RELAY_URL && process.env.NOTIFY_TO) {
-      try {
-        const res = await fetch(process.env.EMAIL_RELAY_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.EMAIL_RELAY_TOKEN || ""}`,
-          },
-          body: JSON.stringify({
-            to: process.env.NOTIFY_TO,
-            replyTo: d.email,
-            subject: `Portfolio ${d.type} inquiry`,
-            text: `${d.name}\n${d.email}\n\n${d.message}`,
-            idempotencyKey: rows[0].id,
-          }),
-          signal: AbortSignal.timeout(8000),
-        });
-        notification = res.ok ? "accepted" : "failed";
-      } catch {
-        notification = "failed";
-      }
-    }
-    try {
-      await db("owner").query(
-        "UPDATE messages SET notification=$2 WHERE id=$1",
-        [rows[0].id, notification],
-      );
-    } catch {
-      /* Submission is already persisted; do not ask the visitor to duplicate it. */
-    }
-    return {
-      ok: true,
-      message:
-        notification === "accepted"
-          ? "Your message is saved. An email notification was accepted by the provider."
-          : notification === "failed"
-            ? "Your message is saved safely. The email notification could not be sent; the owner can read your inquiry in the inbox."
-            : "Your message is saved safely in the owner’s inbox.",
-    };
-  } catch {
-    return failure(
-      "Your message could not be saved. Please try again shortly.",
-    );
-  }
 }

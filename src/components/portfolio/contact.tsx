@@ -1,71 +1,100 @@
+import { ArrowUpRight } from "lucide-react";
+import { SocialIcon } from "@/components/social-icons";
 import { getProfile, getSettings } from "@/lib/content";
 import { PageIntro } from "@/components/shell";
-import { ContactForm } from "@/components/contact-form";
-export default async function Contact({
-  searchParams,
-}: {
-  searchParams: Promise<{ type?: string }>;
-}) {
-  const [p, s, q] = await Promise.all([
-    getProfile(),
-    getSettings(),
-    searchParams,
-  ]);
+
+export default async function Contact() {
+  const [p, s] = await Promise.all([getProfile(), getSettings()]);
+  const indonesian = s.locale === "id";
+  const channels = [
+    {
+      name: "LinkedIn",
+      href: p.linkedin,
+      kind: "linkedin" as const,
+      description: indonesian
+        ? "Terhubung dan diskusikan peluang kerja."
+        : "Connect and talk about opportunities.",
+    },
+    {
+      name: "GitHub",
+      href: p.github,
+      kind: "github" as const,
+      description: indonesian
+        ? "Lihat kode, kontribusi, dan proyek saya."
+        : "Explore my code, contributions, and projects.",
+    },
+    {
+      name: "Instagram",
+      href: p.instagram,
+      kind: "instagram" as const,
+      description: indonesian
+        ? "Ikuti cerita dan keseharian saya."
+        : "Follow along beyond the code.",
+    },
+    {
+      name: "Email",
+      href: p.email ? `mailto:${p.email}` : "",
+      kind: "email" as const,
+      description: p.email,
+    },
+  ].filter((channel) => channel.href);
   return (
     <div className="container contact-page">
-      <div className="contact-layout">
+      <div className="contact-layout contact-direct-layout">
         <aside className="contact-overview">
           <PageIntro
             heading="h2"
-            eyebrow="CONTACT / MAKE A CONNECTION"
+            eyebrow="CONTACT / FIND ME ONLINE"
             title={s.contactHeading}
             description={s.contactIntro}
           />
-
-          <p
-            className="eyebrow"
-            data-enter="label"
-            style={{ animationDelay: "300ms" }}
-          >
-            OPEN A CHANNEL
-          </p>
-          {p.email && (
-            <a className="contact-email" href={`mailto:${p.email}`}>
-              {p.email} ↗
-            </a>
-          )}
           <p
             className="muted"
             data-enter="text"
-            style={{ animationDelay: "350ms" }}
+            style={{ animationDelay: "300ms" }}
           >
-            {p.availability}
-          </p>
-          <div
-            className="social-list"
-            data-enter="actions"
-            style={{ animationDelay: "420ms" }}
-          >
-            {p.github && (
-              <a href={p.github} rel="noreferrer" target="_blank">
-                GitHub <span>↗</span>
-              </a>
-            )}
-            {p.linkedin && (
-              <a href={p.linkedin} rel="noreferrer" target="_blank">
-                LinkedIn <span>↗</span>
-              </a>
-            )}
-          </div>
-          <p className="mono small">
-            Thoughtful questions.
-            <br />
-            Meaningful conversations.
+            {indonesian
+              ? "Hubungi saya langsung melalui media sosial atau email."
+              : "Reach me directly through social media or email."}
           </p>
         </aside>
-        <ContactForm
-          initialType={q.type === "freelance" ? "freelance" : "hiring"}
-        />
+        <div
+          className="contact-channels"
+          data-enter="panel"
+          style={{ animationDelay: "220ms" }}
+        >
+          <p className="eyebrow">
+            {indonesian ? "TEMUKAN SAYA DI" : "ELSEWHERE ON THE WEB"}
+          </p>
+          {channels.map(({ name, href, kind, description }) => (
+            <a
+              className="contact-channel"
+              key={name}
+              href={href}
+              target={kind === "email" ? undefined : "_blank"}
+              rel={kind === "email" ? undefined : "noopener noreferrer"}
+            >
+              <SocialIcon kind={kind} />
+              <span>
+                <strong>{name}</strong>
+                <small>{description}</small>
+              </span>
+              <ArrowUpRight size={22} aria-hidden="true" />
+            </a>
+          ))}
+          {!channels.length && (
+            <p className="muted">
+              {indonesian
+                ? "Tautan media sosial akan segera tersedia."
+                : "Social profiles will be available soon."}
+            </p>
+          )}
+          <p className="mono small muted">
+            {indonesian
+              ? "KONEKSI LANGSUNG. PERCAKAPAN BERMAKNA."
+              : "DIRECT CONNECTIONS. MEANINGFUL CONVERSATIONS."}
+          </p>
+        </div>
       </div>
     </div>
   );

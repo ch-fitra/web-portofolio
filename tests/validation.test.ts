@@ -1,12 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID, scryptSync } from "node:crypto";
-import {
-  projectSchema,
-  blockSchema,
-  contactSchema,
-  webUrl,
-} from "../src/lib/schema";
+import { projectSchema, blockSchema, webUrl } from "../src/lib/schema";
 import { verifyPassword, hashToken } from "../src/lib/password";
 import { prepareUpload } from "../src/lib/upload";
 import sharp from "sharp";
@@ -77,27 +72,6 @@ test("safe blocks reject scripts as URLs, arbitrary HTML types, unsafe video and
     }).success,
     true,
   );
-});
-test("contact rejects honeypot, missing consent and invalid email", () => {
-  const valid = {
-    name: "Test Visitor",
-    email: "visitor@example.com",
-    type: "hiring",
-    message: "I would like to discuss a software development role.",
-    consent: true,
-    website: "",
-  };
-  assert.equal(contactSchema.safeParse(valid).success, true);
-  for (const patch of [
-    { website: "bot.example" },
-    { consent: false },
-    { email: "invalid" },
-    { message: "short" },
-  ])
-    assert.equal(
-      contactSchema.safeParse({ ...valid, ...patch }).success,
-      false,
-    );
 });
 test("password verification and token hashing", () => {
   const salt = "a".repeat(32);

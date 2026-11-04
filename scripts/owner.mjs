@@ -6,7 +6,7 @@ const input = createInterface({ input: process.stdin, output: process.stdout });
 const email = (await input.question("Owner email: ")).trim().toLowerCase();
 input.close();
 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw Error("Invalid email");
-process.stdout.write("New password (hidden, at least 14 characters): ");
+process.stdout.write("New password (hidden): ");
 const password = await new Promise((resolve) => {
   let value = "";
   process.stdin.setRawMode?.(true);
@@ -29,8 +29,9 @@ const password = await new Promise((resolve) => {
   };
   process.stdin.on("data", handler);
 });
-if (password.length < 14 || password.length > 256)
-  throw Error("Password must be 14–256 characters");
+if (!password.length) throw Error("Password is required");
+if (password.length > 256)
+  throw Error("Password must not exceed 256 characters");
 const salt = randomBytes(16).toString("hex");
 const hash = `${salt}:${scryptSync(password, salt, 64).toString("hex")}`;
 const client = new pg.Client({

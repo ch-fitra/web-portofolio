@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ArrowUpRight, Workflow } from "lucide-react";
 import { getProfile, getSettings } from "@/lib/content";
 import { Portrait } from "@/components/portrait";
+import { HomeCursorField } from "@/components/home-cursor-field";
+import { HomeHeadline } from "@/components/home-headline";
 export default async function Home() {
   const [p, s] = await Promise.all([getProfile(), getSettings()]);
   const headline =
@@ -9,6 +11,7 @@ export default async function Home() {
   const intro = s.locale === "id" && p.introId ? p.introId : p.intro;
   return (
     <div className="container home-page">
+      <HomeCursorField />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -19,7 +22,7 @@ export default async function Home() {
               "@type": "Person",
               name: p.name,
               url: process.env.SITE_URL || "http://localhost:3000",
-              sameAs: [p.github, p.linkedin].filter(Boolean),
+              sameAs: [p.github, p.linkedin, p.instagram].filter(Boolean),
             },
           }).replaceAll("<", "\\u003c"),
         }}
@@ -30,10 +33,6 @@ export default async function Home() {
           <span />
         </div>
         <div className="hero-copy" data-enter="scroll-guard">
-          <div className="availability" data-enter="label">
-            <span className="status-dot" />
-            {p.availability}
-          </div>
           <p
             className="hero-introduction"
             data-enter="text"
@@ -41,18 +40,7 @@ export default async function Home() {
           >
             Hello, I’m <span>{p.name.split(" ").slice(0, 2).join(" ")}.</span>
           </p>
-          <h1>
-            {headline.split("\n").map((line, i) => (
-              <span key={i} className={`intro-line ${i ? "muted" : ""}`}>
-                <span
-                  data-enter="title"
-                  style={{ animationDelay: `${100 + i * 80}ms` }}
-                >
-                  {line}
-                </span>
-              </span>
-            ))}
-          </h1>
+          <HomeHeadline text={headline} locale={s.locale} />
           <p
             className="hero-description"
             data-enter="text"

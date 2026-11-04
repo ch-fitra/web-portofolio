@@ -47,7 +47,7 @@ export function SideNavigation() {
   return (
     <nav className="side-navigation" aria-label="Main navigation">
       <div className="side-navigation-links">
-        {pages.map(({ href, label }, index) => {
+        {pages.map(({ href, label }) => {
           const id = href.slice(2);
           const active =
             pathname === "/" ? section === id : pathname.startsWith(`/${id}`);
@@ -81,9 +81,6 @@ export function SideNavigation() {
                 }
               }}
             >
-              <span className="side-nav-index" aria-hidden="true">
-                0{index + 1}
-              </span>
               <span className="side-nav-label">{label}</span>
               <span className="side-nav-marker" aria-hidden="true" />
             </Link>

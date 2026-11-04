@@ -15,7 +15,10 @@ export async function document<T>(key: string, fallback: T): Promise<T> {
   ]);
   return rows[0]?.data ?? fallback;
 }
-export const getProfile = () => document<Profile>("profile", defaultProfile);
+export const getProfile = async (): Promise<Profile> => ({
+  ...defaultProfile,
+  ...(await document<Partial<Profile>>("profile", defaultProfile)),
+});
 export const getSettings = () =>
   document<Settings>("settings", defaultSettings);
 export async function getProjects(owner = false): Promise<Project[]> {

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import pg from "pg";
 import {
   randomBytes,
@@ -8,7 +8,7 @@ import {
   createHash,
 } from "node:crypto";
 import sharp from "sharp";
-const password = randomBytes(24).toString("hex");
+const password = process.env.ADMIN_PASSWORD || "";
 const email = "e2e-owner@example.test";
 const auth = new pg.Pool({ connectionString: process.env.AUTH_DATABASE_URL });
 const owner = new pg.Pool({ connectionString: process.env.OWNER_DATABASE_URL });
@@ -16,6 +16,22 @@ let createdOwner = false;
 let profile: unknown;
 const trackedIds: string[] = [];
 const trackedMedia: string[] = [];
+async function openPublic(page: Page, path = "/") {
+  const response = await page.goto(path);
+  if (["/", "/about", "/projects", "/skills", "/contact"].includes(path)) {
+    await page.getByRole("button", { name: "Enter", exact: true }).click();
+    await expect(page.locator("#home")).toBeVisible();
+    if (path !== "/") {
+      const label = path.slice(1);
+      await page
+        .getByRole("navigation", { name: "Main navigation" })
+        .getByRole("link", { name: label, exact: false })
+        .click();
+    }
+  }
+  return response;
+}
+
 test.beforeEach(async ({ page }) => {
   page.on("pageerror", (error) => {
     throw error;
@@ -28,12 +44,13 @@ test.beforeAll(async () => {
     throw Error(
       "An owner already exists. Run E2E before creating your real account; tests never replace an existing owner.",
     );
-  const keys = ["login", "contact"].map((scope) =>
+  const keys = ["login"].map((scope) =>
     createHmac("sha256", process.env.IP_HASH_SECRET!)
       .update(`${scope}:local-proxy`)
       .digest("hex"),
   );
-  keys.push(createHash("sha256").update(`login-email:${email}`).digest("hex"));
+  if (!password) throw Error("ADMIN_PASSWORD is required for the test server.");
+  keys.push(createHash("sha256").update("login-studio").digest("hex"));
   await auth.query("DELETE FROM rate_limits WHERE key=ANY($1::text[])", [keys]);
   const salt = randomBytes(16).toString("hex");
   await auth.query(
@@ -66,9 +83,6 @@ test.afterAll(async () => {
       ).catch(() => {});
     }
   }
-  await owner.query(
-    "DELETE FROM messages WHERE email='e2e-visitor@example.test'",
-  );
   await owner.query("DELETE FROM records WHERE data->>'name'=ANY($1::text[])", [
     ["E2E skill", "E2E certificate (test only)"],
   ]);
@@ -81,7 +95,7 @@ test("public pages, mobile layout, theme, animated motion and unauthorized resou
   page,
   request,
 }) => {
-  await page.goto("/");
+  await openPublic(page, "/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Intelligent software",
   );
@@ -89,6 +103,8 @@ test("public pages, mobile layout, theme, animated motion and unauthorized resou
   await page.getByRole("button", { name: /Switch to light theme/ }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.reload();
+  await expect(page.getByRole("heading", { name: "Welcome." })).toBeVisible();
+  await page.getByRole("button", { name: "Enter", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.screenshot({ path: ".local/home-light.png", fullPage: true });
   await expect(page.getByRole("button", { name: /Motion:/ })).toHaveCount(0);
@@ -100,20 +116,20 @@ test("public pages, mobile layout, theme, animated motion and unauthorized resou
     "/contact",
     "/privacy",
   ]) {
-    const response = await page.goto(route);
+    const response = await openPublic(page, route);
     expect(response?.status()).toBe(200);
   }
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await openPublic(page, "/");
   await page.screenshot({ path: ".local/home-mobile.png", fullPage: true });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page.keyboard.press("Tab");
+  await page.getByText("Skip to content").focus();
   await expect(page.getByText("Skip to content")).toBeFocused();
-  await page.goto("/admin/inbox");
+  await page.goto("/admin/settings");
   await expect(page).toHaveURL(/\/admin\/login/);
   expect((await request.post("/api/media")).status()).toBe(401);
   expect((await request.delete(`/api/media/${randomUUID()}`)).status()).toBe(
@@ -121,33 +137,29 @@ test("public pages, mobile layout, theme, animated motion and unauthorized resou
   );
   expect((await request.get("/projects/ai-support-triage")).status()).toBe(404);
 });
-test("contact validation saves a private message with honest notification state", async ({
+test("contact provides direct social links without a message form", async ({
   page,
 }) => {
-  await page.goto("/contact?type=freelance");
-  await expect(page.locator('input[name="type"]')).toHaveValue("freelance");
-  await page.getByLabel("Your name").fill("E2E Visitor");
-  await page.getByLabel("Email address").fill("e2e-visitor@example.test");
-  await page
-    .getByLabel("Tell me about your project")
-    .fill("I would like to discuss an AI application for a small team.");
-  await page.getByLabel(/I agree to/).check();
-  await page.getByRole("button", { name: "Send message" }).click();
-  await expect(page.getByRole("status")).toContainText("saved safely");
-  expect(
-    (
-      await owner.query(
-        "SELECT notification FROM messages WHERE email='e2e-visitor@example.test'",
-      )
-    ).rows[0].notification,
-  ).toBe("not_configured");
+  await openPublic(page, "/contact");
+  const contact = page.locator("#contact");
+  await expect(contact.locator("form")).toHaveCount(0);
+  await expect(contact.locator("input, textarea")).toHaveCount(0);
+  for (const link of await contact.locator(".contact-channel").all()) {
+    await expect(link.locator("svg")).toHaveCount(2);
+    if ((await link.getAttribute("href"))?.startsWith("mailto:")) {
+      await expect(link).not.toHaveAttribute("target");
+    } else {
+      await expect(link).toHaveAttribute("href", /^https:\/\//);
+      await expect(link).toHaveAttribute("target", "_blank");
+    }
+  }
 });
+
 test("owner creates, reorders, previews, publishes and unpublishes a safe case study", async ({
   page,
   request,
 }) => {
   await page.goto("/admin/login");
-  await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Enter studio" }).click();
   await expect(page).toHaveURL("/admin");
@@ -200,7 +212,7 @@ test("owner creates, reorders, previews, publishes and unpublishes a safe case s
   expect(await (await request.get("/sitemap.xml")).text()).toContain(
     "/projects/e2e-case-study",
   );
-  await page.goto("/projects");
+  await openPublic(page, "/projects");
   await page.getByRole("button", { name: "AI/ML", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "E2E case study" }),
@@ -221,7 +233,6 @@ test("two portrait uploads stay independent and private media rejects anonymous 
   request,
 }) => {
   await page.goto("/admin/login");
-  await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Enter studio" }).click();
   await expect(page).toHaveURL("/admin");
@@ -270,10 +281,10 @@ test("two portrait uploads stay independent and private media rejects anonymous 
   await page.getByLabel("Home crop position").fill("25");
   await page.getByRole("button", { name: "Save profile" }).click();
   await expect(page.getByRole("status")).toContainText("Changes saved");
-  await page.goto("/");
+  await openPublic(page, "/");
   await expect(page.locator(`img[src="/media/${mediaIds[0]}"]`)).toBeVisible();
   await expect(page.locator(`img[src="/media/${mediaIds[1]}"]`)).toHaveCount(0);
-  await page.goto("/about");
+  await openPublic(page, "/about");
   await expect(page.locator(`img[src="/media/${mediaIds[1]}"]`)).toBeVisible();
   expect((await request.get(`/media/${mediaIds[1]}`)).status()).toBe(200);
   expect(
@@ -288,7 +299,6 @@ test("owner manages skill and certificate visibility through the studio", async 
   page,
 }) => {
   await page.goto("/admin/login");
-  await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Enter studio" }).click();
   await expect(page).toHaveURL("/admin");
@@ -298,14 +308,14 @@ test("owner manages skill and certificate visibility through the studio", async 
   await page.getByLabel("Publicly visible").check();
   await page.getByRole("button", { name: "Save item" }).click();
   await expect(page.getByRole("status")).toContainText("saved");
-  await page.goto("/skills");
+  await openPublic(page, "/skills");
   await expect(page.getByRole("heading", { name: "E2E skill" })).toBeVisible();
   await page.goto("/admin/skills");
   await page.getByRole("button", { name: /E2E skill/ }).click();
   await page.getByLabel("Publicly visible").uncheck();
   await page.getByRole("button", { name: "Save item" }).click();
   await expect(page.getByRole("status")).toContainText("saved");
-  await page.goto("/skills");
+  await openPublic(page, "/skills");
   await expect(page.getByRole("heading", { name: "E2E skill" })).toHaveCount(0);
   await page.goto("/admin/skills");
   await page.getByRole("button", { name: /E2E skill/ }).click();
@@ -319,7 +329,7 @@ test("owner manages skill and certificate visibility through the studio", async 
   await page.getByLabel("Publicly visible").check();
   await page.getByRole("button", { name: "Save item" }).click();
   await expect(page.getByRole("status")).toContainText("saved");
-  await page.goto("/skills");
+  await openPublic(page, "/skills");
   await expect(
     page.getByRole("heading", { name: "E2E certificate (test only)" }),
   ).toBeVisible();
@@ -333,17 +343,16 @@ test("Animated motion, keyboard contact flow, missing media and resume degrade g
   request,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await openPublic(page, "/");
   await expect(page.locator("html")).toHaveAttribute("data-motion", "full");
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/contact");
-  await page.keyboard.press("Tab");
+  await openPublic(page, "/contact");
+  await page.getByText("Skip to content").focus();
   await expect(page.getByText("Skip to content")).toBeFocused();
   await page.keyboard.press("Enter");
-  await page.getByLabel("Your name").fill("QA");
-  await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page.getByLabel("Email address")).toBeFocused();
-  await expect(page.getByRole("button", { name: "Continue" })).toBeEnabled();
+  await page.locator("#contact .contact-channel").first().focus();
+  await expect(page.locator("#contact .contact-channel").first()).toBeFocused();
+  await expect(page.locator("#contact form")).toHaveCount(0);
   expect((await request.get(`/media/${randomUUID()}`)).status()).toBe(404);
   const resume = await request.get("/resume");
   expect(resume.status()).toBe(404);
@@ -360,7 +369,6 @@ test("private pages and mutation endpoints reject anonymous and cross-origin req
     "/admin/skills",
     "/admin/certifications",
     "/admin/media",
-    "/admin/inbox",
     "/admin/settings",
   ]) {
     await page.goto(route);
@@ -373,10 +381,9 @@ test("private pages and mutation endpoints reject anonymous and cross-origin req
       })
     ).status(),
   ).toBe(401);
-  await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill("wrong password");
   await page.getByRole("button", { name: "Enter studio" }).click();
-  await expect(page.getByRole("status")).toContainText("Check your email");
+  await expect(page.getByRole("status")).toContainText("Check your password");
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Enter studio" }).click();
   await expect(page).toHaveURL("/admin");

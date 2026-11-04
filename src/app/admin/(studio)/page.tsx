@@ -1,17 +1,13 @@
 import { requireOwner } from "@/lib/auth";
 import Link from "next/link";
-import { db } from "@/lib/db";
 import { getProjects, getRecords } from "@/lib/content";
 import { StudioHeading } from "@/components/studio/heading";
 export default async function Dashboard() {
   await requireOwner();
-  const [projects, skills, certs, inbox] = await Promise.all([
+  const [projects, skills, certs] = await Promise.all([
     getProjects(true),
     getRecords("skill", true),
     getRecords("certification", true),
-    db("owner").query(
-      "SELECT count(*)::int n FROM messages WHERE status='unread'",
-    ),
   ]);
   return (
     <>
@@ -31,7 +27,6 @@ export default async function Dashboard() {
           ],
           ["Skills", skills.length],
           ["Certificates", certs.length],
-          ["Unread inquiries", inbox.rows[0].n],
         ].map(([label, n]) => (
           <div className="studio-panel" key={label}>
             <span className="muted">{label}</span>
@@ -48,7 +43,7 @@ export default async function Dashboard() {
           <Link href="/admin/projects/new">
             02 / Tell the story of a project ↗
           </Link>
-          <Link href="/admin/inbox">03 / Read your conversations ↗</Link>
+          <Link href="/admin/profile">03 / Update your social profiles ↗</Link>
         </div>
         <p className="muted">
           Candidate projects remain drafts until you review attribution, claims,

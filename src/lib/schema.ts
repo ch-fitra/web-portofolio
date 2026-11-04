@@ -132,6 +132,7 @@ export const profileSchema = z.object({
   email: z.union([z.email(), z.literal("")]),
   github: webUrl,
   linkedin: webUrl,
+  instagram: webUrl.default(""),
   headlineId: short.default(""),
   introId: text.default(""),
   aboutId: text.default(""),
@@ -148,7 +149,6 @@ export const settingsSchema = z.object({
   contactHeading: short,
   contactIntro: text,
   footer: short,
-  retentionDays: z.number().int().min(1).max(3650),
 });
 export type Settings = z.infer<typeof settingsSchema>;
 export const recordSchema = z.object({
@@ -172,16 +172,6 @@ export type ContentRecord = z.infer<typeof recordSchema> & {
   id: string;
   kind: "skill" | "certification";
 };
-export const contactSchema = z.object({
-  name: z.string().trim().min(2).max(100),
-  email: z.email().max(254),
-  type: z.enum(["hiring", "freelance"]),
-  message: z.string().trim().min(20).max(5000),
-  budget: short.default(""),
-  timeline: short.default(""),
-  consent: z.literal(true),
-  website: z.string().max(0),
-});
 export const defaultProfile: Profile = {
   name: "Chairul Fitra Ramadhan",
   handle: "ch-fitra",
@@ -198,9 +188,10 @@ export const defaultProfile: Profile = {
   homePosition: 50,
   aboutPosition: 50,
   resumeId: "",
-  email: "",
+  email: "chairulfitrar@gmail.com",
   github: "https://github.com/ch-fitra",
   linkedin: "https://www.linkedin.com/in/chfitra",
+  instagram: "https://www.instagram.com/chfitrah/",
   headlineId: "Perangkat lunak cerdas.\nDirancang dengan saksama.",
   introId:
     "Membangun aplikasi berbasis AI, sistem full-stack, dan otomasi yang bermanfaat.",
@@ -213,13 +204,12 @@ export const defaultSettings: Settings = {
   description:
     "The work and thinking of Chairul Fitra Ramadhan. AI-powered applications, full-stack engineering, and intelligent automation.",
   privacy:
-    "Contact details are used only to respond to your inquiry. Messages are stored privately on this website’s server for up to 180 days. Contact the owner to request deletion. No advertising trackers are installed. Optional email notifications share your inquiry with the configured email provider. This site does not operate an AI chat assistant.",
+    "This portfolio displays professional information and media. It does not collect or store visitor messages. Contact takes place directly on external social platforms, which apply their own privacy policies. No advertising trackers are installed. Owner Studio uses a private login session cookie; your theme preference is stored in your browser.",
   locale: "en",
   theme: "system",
   motion: "system",
   contactHeading: "Good things start\nwith a conversation.",
   contactIntro:
-    "Have a role, an idea, or a technical challenge in mind? Tell me a little about it.",
+    "Have a role, an idea, or a technical challenge in mind? Connect with me on social media.",
   footer: "Built with intention. Always evolving.",
-  retentionDays: 180,
 };

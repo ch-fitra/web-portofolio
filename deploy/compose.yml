@@ -1,4 +1,4 @@
-# Run migrations/owner setup from the source checkout before starting the web container.
+# Run migrations from the source checkout and set ADMIN_PASSWORD in .env.production.
 # DATABASE_URL etc. point to your existing LOCAL PostgreSQL server.
 services:
   portfolio:
