@@ -3263,6 +3263,15 @@ body:has(.home-page):not(:has(.single-page-portfolio)) > .footer p {
   }
 }
 /* Public navigation: a persistent left rail and a minimal preference toolbar. */
+/* Hide the public page scrollbar without disabling scrolling or studio controls. */
+html:has(.public-header),
+body:has(.public-header) {
+  scrollbar-width: none;
+}
+html:has(.public-header)::-webkit-scrollbar,
+body:has(.public-header)::-webkit-scrollbar {
+  display: none;
+}
 body:has(.public-header) {
   --navigation-width: 202px;
 }
