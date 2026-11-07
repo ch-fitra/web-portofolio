@@ -58,6 +58,8 @@ Integration/E2E hanya berjalan pada cluster terisolasi port 55432. E2E memakai `
 
 ## Deploy ke server sendiri
 
+**Untuk membawa seluruh data yang tersimpan saat ini**, gunakan [panduan transfer ke VPS Linux](docs/TRANSFER_TO_VPS.md). Jalankan `npm run transfer:export`, transfer pasangan backup/kunci secara privat, lalu `transfer:restore` di database kosong. Prosedur seed di bawah hanya untuk instalasi baru tanpa data lama.
+
 Tidak ada deployment yang dilakukan otomatis. Contoh Linux + Nginx disediakan; sesuaikan dengan server Anda.
 
 1. Install Node 24 dan PostgreSQL 18. Buat database khusus dan isi konfigurasi staging/production; migrasikan dari checkout dengan kredensial migrator, kemudian seed dan isi `ADMIN_PASSWORD` pada environment runtime. Simpan backup sebelum migrasi berikutnya.
