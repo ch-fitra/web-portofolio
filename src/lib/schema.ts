@@ -123,6 +123,8 @@ export const profileSchema = z.object({
   intro: text,
   about: text,
   location: short,
+  degree: short.default(""),
+  university: short.default(""),
   availability: short,
   homePortraitId: mediaId,
   aboutPortraitId: mediaId,
@@ -136,6 +138,8 @@ export const profileSchema = z.object({
   headlineId: short.default(""),
   introId: text.default(""),
   aboutId: text.default(""),
+  approach: text.max(1200).default(""),
+  approachId: text.max(1200).default(""),
   capabilities: z.array(z.object({ title: short, description: text })).max(12),
 });
 export type Profile = z.infer<typeof profileSchema>;
@@ -181,7 +185,9 @@ export const defaultProfile: Profile = {
     "Building AI-powered applications, full-stack systems, and useful automation. Explore the thinking behind the work.",
   about:
     "I’m Chairul Fitra Ramadhan. This is a space for the software I build, the decisions behind it, and what I learn along the way.",
-  location: "",
+  location: "Medan, Sumatera Utara, Indonesia",
+  degree: "Sarjana Komputer",
+  university: "Universitas Mikroskil",
   availability: "Let’s start a conversation",
   homePortraitId: "",
   aboutPortraitId: "",
@@ -197,6 +203,10 @@ export const defaultProfile: Profile = {
     "Membangun aplikasi berbasis AI, sistem full-stack, dan otomasi yang bermanfaat.",
   aboutId:
     "Saya Chairul Fitra Ramadhan. Di sini saya membagikan karya, keputusan teknis, dan hal yang saya pelajari.",
+  approach:
+    "Start with the problem, keep the solution clear, and refine the details that make it useful.",
+  approachId:
+    "Mulai dari masalah, susun solusi yang jelas, lalu rapikan detail yang membuatnya bermanfaat.",
   capabilities: [],
 };
 export const defaultSettings: Settings = {

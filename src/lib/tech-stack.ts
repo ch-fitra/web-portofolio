@@ -1,0 +1,100 @@
+/** Owner-supplied technologies, transcribed from the provided Tech Stack reference. */
+export const techStack = [
+  {
+    title: "Programming Languages",
+    description: "The languages I use to turn ideas into working software.",
+    descriptionId:
+      "Bahasa yang saya gunakan untuk mengubah ide menjadi perangkat lunak.",
+    items: ["Python", "JavaScript", "TypeScript", "PHP", "Dart", "Java", "Go"],
+  },
+  {
+    title: "Frontend",
+    description:
+      "Interfaces for the web and mobile, with attention to clarity and responsiveness.",
+    descriptionId:
+      "Antarmuka web dan mobile yang jelas, responsif, dan nyaman digunakan.",
+    items: [
+      "HTML5",
+      "CSS3",
+      "React",
+      "Next.js",
+      "Vue.js",
+      "Angular",
+      "Flutter",
+      "React Native",
+      "Tailwind CSS",
+      "Bootstrap",
+      "Vite",
+    ],
+  },
+  {
+    title: "Backend",
+    description:
+      "APIs, application logic, and the services behind the interface.",
+    descriptionId:
+      "API, logika aplikasi, dan layanan yang bekerja di balik antarmuka.",
+    items: [
+      "FastAPI",
+      "Django",
+      "Django REST Framework",
+      "Flask",
+      "Node.js",
+      "Express.js",
+      "NestJS",
+      "Fastify",
+      "Laravel",
+      "CodeIgniter",
+    ],
+  },
+  {
+    title: "Database",
+    description:
+      "Storing, organizing, and accessing the data an application depends on.",
+    descriptionId:
+      "Menyimpan, menata, dan mengakses data yang dibutuhkan aplikasi.",
+    items: ["MySQL", "PostgreSQL", "MongoDB", "Redis"],
+  },
+] as const;
+
+export const techIconSlugs: Record<string, string> = {
+  Python: "python",
+  JavaScript: "javascript",
+  TypeScript: "typescript",
+  PHP: "php",
+  Dart: "dart",
+  Java: "java",
+  Go: "go",
+  HTML5: "html5",
+  CSS3: "css",
+  React: "react",
+  "Next.js": "nextdotjs",
+  "Vue.js": "vuedotjs",
+  Angular: "angular",
+  Flutter: "flutter",
+  "React Native": "react",
+  "Tailwind CSS": "tailwindcss",
+  Bootstrap: "bootstrap",
+  Vite: "vite",
+  FastAPI: "fastapi",
+  Django: "django",
+  "Django REST Framework": "django",
+  Flask: "flask",
+  "Node.js": "nodedotjs",
+  "Express.js": "express",
+  NestJS: "nestjs",
+  Fastify: "fastify",
+  Laravel: "laravel",
+  CodeIgniter: "codeigniter",
+  MySQL: "mysql",
+  PostgreSQL: "postgresql",
+  MongoDB: "mongodb",
+  Redis: "redis",
+  Docker: "docker",
+  "Linux (Ubuntu)": "ubuntu",
+  Nginx: "nginx",
+  PM2: "pm2",
+  Vercel: "vercel",
+  Netlify: "netlify",
+  Cloudflare: "cloudflare",
+  Tailscale: "tailscale",
+};

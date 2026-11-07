@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getProject } from "@/lib/content";
 import { ProjectStory } from "@/components/chapters";
-import { ContactCTA } from "@/components/shell";
 export async function generateMetadata({
   params,
 }: {
@@ -88,7 +87,6 @@ export default async function Detail({
         />
       )}
       <ProjectStory project={p} />
-      <ContactCTA />
     </div>
   );
 }

@@ -1,10 +1,27 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID, scryptSync } from "node:crypto";
-import { projectSchema, blockSchema, webUrl } from "../src/lib/schema";
+import {
+  projectSchema,
+  blockSchema,
+  webUrl,
+  profileSchema,
+  defaultProfile,
+} from "../src/lib/schema";
 import { verifyPassword, hashToken } from "../src/lib/password";
 import { prepareUpload } from "../src/lib/upload";
 import sharp from "sharp";
+test("existing profiles remain valid without the new About approach fields", () => {
+  const legacy: Partial<typeof defaultProfile> = { ...defaultProfile };
+  delete legacy.approach;
+  delete legacy.approachId;
+  const parsed = profileSchema.parse(legacy);
+  assert.equal(parsed.name, defaultProfile.name);
+  assert.equal(parsed.about, defaultProfile.about);
+  assert.equal(parsed.approach, "");
+  assert.equal(parsed.approachId, "");
+});
+
 test("publication requires contribution, context, summary and visible content", () => {
   const p = {
     title: "Test",

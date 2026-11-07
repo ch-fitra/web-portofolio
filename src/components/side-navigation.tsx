@@ -1,20 +1,24 @@
 "use client";
 
-import Link from "next/link";
+import {
+  PortfolioSectionLink,
+  usePortfolioNavigation,
+} from "./portfolio-navigation";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { replayIntroEvent } from "./page-entrance";
 
 const pages = [
-  { href: "/#home", label: "Home" },
-  { href: "/#about", label: "About" },
-  { href: "/#projects", label: "Projects" },
-  { href: "/#skills", label: "Skills" },
-  { href: "/#contact", label: "Contact" },
-];
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" },
+] as const;
 
 export function SideNavigation() {
   const pathname = usePathname();
+  const { rememberSection } = usePortfolioNavigation();
   const [section, setSection] = useState("home");
   useEffect(() => {
     if (pathname !== "/") return;
@@ -29,12 +33,15 @@ export function SideNavigation() {
         sections
           .filter((item) => item.getBoundingClientRect().top <= line)
           .at(-1) || sections[0];
-      if (current) setSection(current.id);
+      const matched = pages.find((page) => page.id === current?.id);
+      if (matched) {
+        setSection(matched.id);
+        rememberSection(matched.id);
+      }
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
-    update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
@@ -42,23 +49,21 @@ export function SideNavigation() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [pathname]);
+  }, [pathname, rememberSection]);
+
+  if (pathname !== "/") return null;
 
   return (
     <nav className="side-navigation" aria-label="Main navigation">
       <div className="side-navigation-links">
-        {pages.map(({ href, label }) => {
-          const id = href.slice(2);
-          const active =
-            pathname === "/" ? section === id : pathname.startsWith(`/${id}`);
+        {pages.map(({ id, label }) => {
+          const active = section === id;
           return (
-            <Link
-              key={href}
-              href={href}
+            <PortfolioSectionLink
+              key={id}
+              section={id}
               className="side-nav-link"
-              aria-current={
-                active ? (pathname === "/" ? "location" : "page") : undefined
-              }
+              aria-current={active ? "location" : undefined}
               onClick={(event) => {
                 if (
                   pathname === "/" &&
@@ -67,23 +72,18 @@ export function SideNavigation() {
                   !event.shiftKey &&
                   !event.altKey
                 ) {
-                  event.preventDefault();
-                  const target = document.getElementById(id);
-                  if (target) {
-                    history.pushState(null, "", `${location.search}#${id}`);
-                    target.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    });
-                    if (active)
-                      window.dispatchEvent(new Event(replayIntroEvent));
-                  }
+                  if (active)
+                    window.dispatchEvent(
+                      new CustomEvent(replayIntroEvent, {
+                        detail: { section: id },
+                      }),
+                    );
                 }
               }}
             >
               <span className="side-nav-label">{label}</span>
               <span className="side-nav-marker" aria-hidden="true" />
-            </Link>
+            </PortfolioSectionLink>
           );
         })}
       </div>

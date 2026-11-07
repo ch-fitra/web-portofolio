@@ -64,7 +64,7 @@ test("entry opens Home and refreshing Contact returns to Welcome", async ({
     .getByRole("navigation", { name: "Main navigation" })
     .getByRole("link", { name: "Contact", exact: true })
     .click();
-  await expect(page).toHaveURL("/#contact");
+  await expect(page).toHaveURL("/");
   await page.reload();
   await expect(page.getByRole("heading", { name: "Welcome." })).toBeVisible();
   await expect(page).toHaveURL("/");

@@ -1,24 +1,20 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { WelcomeLanding } from "@/components/welcome-landing";
+import { usePortfolioNavigation } from "./portfolio-navigation";
 import {
   PortalTransition,
   type PortalOrigin,
 } from "@/components/portal-transition";
 
-/** Enter lasts for this mounted visit only: a full refresh always welcomes again. */
+/** Entry persists across internal routes; a full refresh always welcomes again. */
 export function PortfolioGateway({ children }: { children: ReactNode }) {
-  const [entered, setEntered] = useState(false);
+  const { entered, enter: complete, consumeSection } = usePortfolioNavigation();
+  const returning = useRef(entered);
+  const destination = useRef<string | null>(null);
   const [origin, setOrigin] = useState<PortalOrigin | null>(null);
   const started = useRef(false);
-  const complete = useCallback(() => setEntered(true), []);
   function enter(point: PortalOrigin) {
     if (started.current) return;
     started.current = true;
@@ -27,6 +23,7 @@ export function PortfolioGateway({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
+    if (returning.current) return;
     const previousRestoration = history.scrollRestoration;
     history.scrollRestoration = "manual";
     history.replaceState(
@@ -42,11 +39,21 @@ export function PortfolioGateway({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!entered) return;
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    const heading = document.querySelector<HTMLElement>("#home h1");
+    const section =
+      destination.current ??
+      consumeSection() ??
+      (returning.current ? "restore" : "home");
+    destination.current = section;
+    if (section === "restore") return;
+    document
+      .getElementById(section)
+      ?.scrollIntoView({ block: "start", behavior: "instant" });
+    const heading = document.querySelector<HTMLElement>(
+      `#${section} :is(h1, h2)`,
+    );
     heading?.setAttribute("tabindex", "-1");
     heading?.focus({ preventScroll: true });
-  }, [entered]);
+  }, [entered, consumeSection]);
 
   return (
     <>

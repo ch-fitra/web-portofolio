@@ -63,12 +63,10 @@ export default async function Contact() {
           data-enter="panel"
           style={{ animationDelay: "220ms" }}
         >
-          <p className="eyebrow">
-            {indonesian ? "TEMUKAN SAYA DI" : "ELSEWHERE ON THE WEB"}
-          </p>
           {channels.map(({ name, href, kind, description }) => (
             <a
               className="contact-channel"
+              data-channel={kind}
               key={name}
               href={href}
               target={kind === "email" ? undefined : "_blank"}

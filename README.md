@@ -30,6 +30,10 @@ Alamat `/` selalu menampilkan Welcome saat pertama dibuka atau di-refresh, terma
 
 ## Penggunaan
 
+Navigasi Home, About, Skills, Projects, dan Contact menggulir halaman utama tanpa mengubah URL `/` atau menambahkan hash. **View all projects** membuka halaman `/projects` tersendiri dengan feed, pencarian, filter, dan tautan detail proyek. Menu dari halaman daftar/detail kembali ke bagian yang dipilih tanpa mengulang Welcome; refresh halaman utama tetap kembali ke Welcome.
+
+Bagian Projects di halaman utama memakai carousel yang mengalir dari kanan ke kiri. Kartu membesar secara bertahap saat mendekati tengah. Drag/swipe untuk menggeser atau melempar kartu; momentum akan mereda kembali ke kecepatan awal. Keyboard kiri/kanan bekerja saat kartu mendapat fokus. Preferensi reduced motion menghentikan autoplay. Hanya proyek published yang tampil; satu proyek ditampilkan statis, dan koleksi kosong menampilkan pesan penantian.
+
 - Kelola profil, foto Home/About, crop vertikal, CV PDF, kapabilitas, dan tautan di **Profile & portraits**.
 - Tambahkan media di **Media library**. Aset privat sampai digunakan di konten publik.
 - Buat case study, chapter, dan block; simpan draft, preview, lalu ubah status ke published. Ubah ke draft/archived untuk menghilangkannya dari publik dan sitemap.

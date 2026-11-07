@@ -18,7 +18,7 @@ const trackedIds: string[] = [];
 const trackedMedia: string[] = [];
 async function openPublic(page: Page, path = "/") {
   const response = await page.goto(path);
-  if (["/", "/about", "/projects", "/skills", "/contact"].includes(path)) {
+  if (["/", "/about", "/skills", "/contact"].includes(path)) {
     await page.getByRole("button", { name: "Enter", exact: true }).click();
     await expect(page.locator("#home")).toBeVisible();
     if (path !== "/") {

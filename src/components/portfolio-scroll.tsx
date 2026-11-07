@@ -5,6 +5,28 @@ import { useEffect, useRef } from "react";
 export function PortfolioScroll({ children }: { children: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const element = root.current;
+    if (!element) return;
+    // Contact and the real footer share the last viewport, including wrapped copy.
+    const header = document.querySelector<HTMLElement>(".public-header");
+    const footer = document.querySelector<HTMLElement>("body > .footer");
+    const measure = () => {
+      element.style.setProperty(
+        "--portfolio-header-height",
+        `${header?.getBoundingClientRect().height ?? 64}px`,
+      );
+      element.style.setProperty(
+        "--portfolio-footer-height",
+        `${footer?.getBoundingClientRect().height ?? 96}px`,
+      );
+    };
+    const resize = new ResizeObserver(measure);
+    if (header) resize.observe(header);
+    if (footer) resize.observe(footer);
+    measure();
+    return () => resize.disconnect();
+  }, []);
+  useEffect(() => {
     const sections =
       root.current?.querySelectorAll<HTMLElement>(".portfolio-section");
     if (!sections) return;

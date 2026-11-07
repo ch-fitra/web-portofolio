@@ -1,0 +1,121 @@
+{
+  "source": "https://id.linkedin.com/in/chfitra",
+  "retrievedOn": "2026-11-07",
+  "projects": [
+    {
+      "title": "Student Attendance Management System – SMAN 2 Rantau Selatan",
+      "slug": "student-attendance-sman-2-rantau-selatan",
+      "summary": "A web-based attendance system for SMAN 2 Rantau Selatan, with time-limited sessions, shareable links, QR codes, and attendance reports.",
+      "category": "Education Technology",
+      "role": "Full-Stack Developer",
+      "collaboration": "Client",
+      "context": "An independent client project for SMAN 2 Rantau Selatan to digitalize student attendance tracking and classroom attendance management.",
+      "contribution": "Developed the web application, including student records, attendance sessions, link and QR-based attendance submission, monitoring, and reports.",
+      "stack": [
+        "Laravel",
+        "React",
+        "TypeScript",
+        "Inertia.js",
+        "Tailwind CSS",
+        "MySQL"
+      ],
+      "tags": [
+        "Attendance",
+        "Education",
+        "Full-Stack"
+      ],
+      "timeframe": "October 2026",
+      "featured": true,
+      "order": 0,
+      "sections": [
+        {
+          "title": "The project",
+          "text": "Developed as an independent client project for SMAN 2 Rantau Selatan, this application brings student attendance tracking and classroom attendance management into a web-based system. Teachers can manage student records, open time-limited attendance sessions, monitor submissions, and generate reports."
+        },
+        {
+          "title": "Attendance workflow",
+          "text": "Teachers can distribute an attendance link or QR code. Students submit attendance through an online form without individual accounts or prior student data registration. The system also includes Excel import, attendance verification, real-time response monitoring, attendance statistics, and PDF report generation."
+        },
+        {
+          "title": "Implementation",
+          "text": "Built with Laravel, React, TypeScript, Inertia.js, Tailwind CSS, and MySQL. The work focused on responsive design, usability, data management, and translating the school's requirements into a functional application."
+        }
+      ]
+    },
+    {
+      "title": "MY PREMIER – Industrial Product Catalog Platform",
+      "slug": "my-premier-industrial-product-catalog",
+      "summary": "Contributions to an existing B2B industrial product catalog for PT Premier Engineering Indonesia, spanning mobile applications, an administration dashboard, and backend services.",
+      "category": "Enterprise Software",
+      "role": "Full-Stack Developer · Contributor",
+      "collaboration": "Team",
+      "context": "Ongoing development and enhancement of an existing B2B product catalog at PT Premier Engineering Indonesia, alongside AI Engineer responsibilities.",
+      "contribution": "Supported application development, maintained and improved existing features, troubleshot technical issues, and contributed to frontend, backend, and database integration.",
+      "stack": [
+        "Flutter",
+        "Next.js",
+        "Go",
+        "REST API",
+        "Firebase"
+      ],
+      "tags": [
+        "B2B",
+        "Product Catalog",
+        "Cross-Platform"
+      ],
+      "timeframe": "March–July 2026",
+      "featured": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "An existing application ecosystem",
+          "text": "MY PREMIER is a B2B industrial product catalog platform for PT Premier Engineering Indonesia. The existing ecosystem combines Flutter mobile applications, a Next.js administration dashboard, and a Golang REST API backend integrated with Firebase services."
+        },
+        {
+          "title": "My contribution",
+          "text": "Contributed to ongoing development and enhancement as part of full-stack responsibilities alongside an AI Engineer role. The work involved supporting application development, maintaining and improving existing functionality, investigating technical issues, and contributing to the integration of frontend, backend, and database components. This was a contribution to an existing system, rather than sole ownership of the platform."
+        }
+      ]
+    },
+    {
+      "title": "Sistem Informasi Akademik (SIAKAD) – MAS Aisyiyah Medan",
+      "slug": "siakad-mas-aisyiyah-medan",
+      "summary": "An academic information system for MAS Aisyiyah Medan, bringing admissions, student and teacher management, scheduling, attendance, grades, and reports into one platform.",
+      "category": "Education Technology",
+      "role": "Full-Stack Developer · Undergraduate Thesis",
+      "collaboration": "Academic",
+      "context": "An undergraduate thesis project at Universitas Mikroskil, developed for the academic administration needs of MAS Aisyiyah Medan.",
+      "contribution": "Designed and developed the web-based academic information system with a decoupled frontend and backend, role-based access, and centralized academic management features.",
+      "stack": [
+        "React",
+        "Vite",
+        "Laravel",
+        "REST API",
+        "MySQL"
+      ],
+      "tags": [
+        "SIAKAD",
+        "Education",
+        "RBAC",
+        "Undergraduate Thesis"
+      ],
+      "timeframe": "October 2025–June 2026",
+      "featured": true,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Academic administration in one place",
+          "text": "Developed a web-based Academic Information System for MAS Aisyiyah Medan as an undergraduate thesis at Universitas Mikroskil. The project addresses school administration and academic management through a centralized platform."
+        },
+        {
+          "title": "Functional scope",
+          "text": "The platform integrates student admissions (PPDB), student and teacher management, class scheduling, attendance tracking, academic grading, report generation, and school information management. Role-Based Access Control supports administrators, principals, teachers, students, and prospective students."
+        },
+        {
+          "title": "Architecture and process",
+          "text": "Built with React.js, Vite, a Laravel REST API, and MySQL, using a decoupled full-stack architecture. Development followed the Waterfall methodology with attention to functionality, usability, data accuracy, and maintainability."
+        }
+      ]
+    }
+  ]
+}

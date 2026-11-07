@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Preferences } from "./preferences";
 import { SideNavigation } from "./side-navigation";
+import { PortfolioSectionLink } from "./portfolio-navigation";
 import type { Profile, Settings } from "@/lib/schema";
 export function Header() {
   return (
@@ -25,23 +26,13 @@ export function Footer({
   return (
     <footer className="footer container">
       <div>
-        <Link href="/" className="wordmark">
+        <PortfolioSectionLink section="home" className="wordmark">
           {profile.handle}
           <span className="tiny-dot" />
-        </Link>
+        </PortfolioSectionLink>
         <p>{settings.footer}</p>
       </div>
       <div className="footer-links">
-        {profile.github && (
-          <a href={profile.github} target="_blank" rel="noreferrer">
-            GitHub ↗
-          </a>
-        )}
-        {profile.linkedin && (
-          <a href={profile.linkedin} target="_blank" rel="noreferrer">
-            LinkedIn ↗
-          </a>
-        )}
         <Link href="/privacy">Privacy</Link>
         <span>© {new Date().getFullYear()}</span>
       </div>
@@ -98,9 +89,9 @@ export function ContactCTA() {
         <br />
         <span className="muted">in mind?</span>
       </h2>
-      <Link className="button button-light" href="/contact">
+      <PortfolioSectionLink className="button button-light" section="contact">
         Let’s build something <ArrowUpRight size={18} />
-      </Link>
+      </PortfolioSectionLink>
     </section>
   );
 }

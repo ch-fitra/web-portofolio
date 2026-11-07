@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { ArrowUpRight, Workflow } from "lucide-react";
+import { Workflow } from "lucide-react";
 import { getProfile, getSettings } from "@/lib/content";
 import { Portrait } from "@/components/portrait";
 import { HomeCursorField } from "@/components/home-cursor-field";
@@ -48,27 +47,6 @@ export default async function Home() {
           >
             {intro}
           </p>
-          <div
-            className="hero-buttons"
-            data-enter="actions"
-            style={{ animationDelay: "350ms" }}
-          >
-            <Link className="button button-light" href="/#projects">
-              Explore the work <ArrowUpRight size={18} />
-            </Link>
-            <Link className="button button-outline" href="/#contact">
-              Hire me <ArrowUpRight size={16} />
-            </Link>
-          </div>
-          <div
-            className="hero-footnote"
-            data-enter="text"
-            style={{ animationDelay: "430ms" }}
-          >
-            <span className="mono">{p.role.toUpperCase()}</span>
-            <i />
-            <span>Logic meets possibility.</span>
-          </div>
         </div>
         <div
           className="hero-visual"
@@ -89,25 +67,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      <div
-        className="hero-bottom"
-        data-enter="text"
-        style={{ animationDelay: "500ms" }}
-      >
-        <span className="mono">APPLIED INTELLIGENCE / HUMAN INTENTION</span>
-        <div className="home-socials">
-          {p.github && (
-            <a href={p.github} target="_blank" rel="noreferrer">
-              GitHub <ArrowUpRight size={13} />
-            </a>
-          )}
-          {p.linkedin && (
-            <a href={p.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn <ArrowUpRight size={13} />
-            </a>
-          )}
-        </div>
-      </div>
     </div>
   );
 }

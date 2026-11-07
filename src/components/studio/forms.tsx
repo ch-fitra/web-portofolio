@@ -169,6 +169,8 @@ export function ProfileEditor({
               "role",
               "availability",
               "location",
+              "degree",
+              "university",
               "email",
               "github",
               "linkedin",

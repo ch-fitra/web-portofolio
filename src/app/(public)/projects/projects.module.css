@@ -1,0 +1,36 @@
+.page {
+  padding-block: 36px 64px;
+  min-height: calc(100svh - 160px);
+}
+.heading {
+  margin-block: 30px 32px;
+}
+.heading h1 {
+  font-size: clamp(36px, 4.5vw, 58px);
+  line-height: 1.1;
+  letter-spacing: -0.055em;
+}
+.heading h1 span {
+  color: var(--accent);
+}
+.heading p {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 50ch;
+}
+.page :global(.project-grid) {
+  margin-top: 24px;
+}
+.page :global(.project-cover-placeholder) {
+  padding: 24px;
+  text-align: center;
+}
+@media (max-width: 760px) {
+  .page {
+    padding-block: 24px 40px;
+  }
+  .heading {
+    margin-block: 24px;
+  }
+}

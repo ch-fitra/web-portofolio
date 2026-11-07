@@ -20,8 +20,8 @@ export default async function StudioLayout({
           {[
             ["", "Overview"],
             ["profile", "Profile & portraits"],
-            ["projects", "Projects"],
             ["skills", "Skills"],
+            ["projects", "Projects"],
             ["certifications", "Certifications"],
             ["media", "Media library"],
             ["settings", "Site settings"],

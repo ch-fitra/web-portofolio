@@ -10,11 +10,16 @@ export function PageEntrance({ children }: { children: React.ReactNode }) {
   const scope = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const replay = () => {
+    const replay = (event: Event) => {
       const root = scope.current;
       if (!root) return;
       // Restart only entrance animations. Preserve form values, focus, and ambient effects.
-      (root.querySelector(".portfolio-section:target") || root)
+      const section =
+        event instanceof CustomEvent &&
+        typeof event.detail?.section === "string"
+          ? document.getElementById(event.detail.section)
+          : null;
+      (section && root.contains(section) ? section : root)
         .querySelectorAll<HTMLElement>("[data-enter]")
         .forEach((element) => {
           element.getAnimations().forEach((animation) => {

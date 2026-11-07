@@ -37,9 +37,6 @@ export function ProjectCard({
             <span className="cover-title">{project.title}</span>
           </div>
         )}
-        <span className="project-index">
-          {String(index + 1).padStart(2, "0")} / {project.collaboration}
-        </span>
         <span className="round-arrow">
           <ArrowUpRight size={21} />
         </span>

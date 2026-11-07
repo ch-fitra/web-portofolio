@@ -1,11 +1,38 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { HomeCursorField } from "@/components/home-cursor-field";
 import type { PortalOrigin } from "@/components/portal-transition";
 
 const backdrop = "IDEAS INTO IMPACT · CODE WITH PURPOSE · HUMAN AT THE CORE ·";
+
+const welcomeMessages = [
+  {
+    title: "Welcome",
+    subtitle: "Thanks for stopping by my portfolio.",
+    detail: "Let me introduce myself.",
+    scale: 1,
+  },
+  {
+    title: "I'm Fitra",
+    subtitle: "Chairul Fitra Ramadhan.",
+    detail: "The person behind the code.",
+    scale: 0.85,
+  },
+  {
+    title: "AI & Code",
+    subtitle: "I build AI-powered applications.",
+    detail: "Full-stack development & intelligent automation.",
+    scale: 0.8,
+  },
+  {
+    title: "Let's explore",
+    subtitle: "Discover my projects and the thinking behind them.",
+    detail: "Step inside and get to know my work.",
+    scale: 0.62,
+  },
+];
 
 export function WelcomeLanding({
   onEnter,
@@ -15,6 +42,35 @@ export function WelcomeLanding({
   entering?: boolean;
 }) {
   const entryButton = useRef<HTMLButtonElement>(null);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [fading, setFading] = useState(false);
+  const message = welcomeMessages[wordIndex];
+  const word = message.title;
+  const subtitleIndex = fading
+    ? (wordIndex + 1) % welcomeMessages.length
+    : wordIndex;
+
+  useEffect(() => {
+    if (entering) return;
+    let swapTimer: number | undefined;
+    const holdTimer = window.setTimeout(() => {
+      setFading(true);
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      swapTimer = window.setTimeout(
+        () => {
+          setWordIndex((index) => (index + 1) % welcomeMessages.length);
+          setFading(false);
+        },
+        reducedMotion ? 0 : 350,
+      );
+    }, 5000);
+    return () => {
+      window.clearTimeout(holdTimer);
+      window.clearTimeout(swapTimer);
+    };
+  }, [wordIndex, entering]);
 
   useEffect(() => {
     if (entering) return;
@@ -63,9 +119,18 @@ export function WelcomeLanding({
       </div>
 
       <section className="welcome-center" aria-label="Welcome to the portfolio">
-        <h1 className="welcome-title" aria-label="Welcome.">
-          {Array.from("Welcome").map((letter, i) => (
-            <span className="welcome-letter-mask" aria-hidden="true" key={i}>
+        <h1
+          className="welcome-title"
+          aria-label={`${word}.`}
+          data-fading={fading}
+          style={{ "--title-scale": message.scale } as CSSProperties}
+        >
+          {Array.from(word).map((letter, i) => (
+            <span
+              className="welcome-letter-mask"
+              aria-hidden="true"
+              key={`${word}-${i}`}
+            >
               <span style={{ "--letter": i } as CSSProperties}>{letter}</span>
             </span>
           ))}
@@ -73,11 +138,28 @@ export function WelcomeLanding({
             .
           </span>
         </h1>
-        <p className="welcome-subtitle">
-          A human behind the code.
-          <br />
-          <span>A world of possibilities ahead.</span>
-        </p>
+        <div className="welcome-subtitles">
+          {welcomeMessages.map((item, index) => (
+            <p
+              key={item.title}
+              className="welcome-subtitle"
+              aria-hidden={index !== subtitleIndex}
+              data-position={
+                index === subtitleIndex
+                  ? "active"
+                  : index ===
+                      (subtitleIndex + welcomeMessages.length - 1) %
+                        welcomeMessages.length
+                    ? "previous"
+                    : "next"
+              }
+            >
+              {item.subtitle}
+              <br />
+              <span>{item.detail}</span>
+            </p>
+          ))}
+        </div>
         <button
           ref={entryButton}
           type="button"

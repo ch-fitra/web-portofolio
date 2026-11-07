@@ -17,8 +17,10 @@ export async function Portrait({
       data-enter={variant === "about" ? "portrait" : undefined}
       style={variant === "about" ? { animationDelay: "160ms" } : undefined}
     >
-      <div className="portrait-grid" aria-hidden="true" />
-      {!media && <NeuralMesh />}
+      {variant === "home" && (
+        <div className="portrait-grid" aria-hidden="true" />
+      )}
+      {!media && variant === "home" && <NeuralMesh />}
       {media ? (
         <Image
           src={`/media/${media.id}`}
@@ -29,6 +31,16 @@ export async function Portrait({
           style={{ objectFit: "cover", objectPosition: `50% ${position}%` }}
           sizes="(max-width: 760px) 100vw, 40vw"
         />
+      ) : variant === "about" ? (
+        <div
+          className="about-photo-placeholder"
+          role="img"
+          aria-label="About portrait not yet supplied"
+        >
+          <span aria-hidden="true">
+            cf<span>.</span>
+          </span>
+        </div>
       ) : (
         <div
           className="portrait-placeholder"
@@ -40,15 +52,19 @@ export async function Portrait({
           <span className="portrait-caption">A FACE BEHIND THE CODE</span>
         </div>
       )}
-      <div className="portrait-cross top-left" aria-hidden="true">
-        +
-      </div>
-      <div className="portrait-cross bottom-right" aria-hidden="true">
-        +
-      </div>
-      <div className="portrait-label">
-        <span className="status-dot" /> HUMAN AT THE CORE
-      </div>
+      {variant === "home" && (
+        <>
+          <div className="portrait-cross top-left" aria-hidden="true">
+            +
+          </div>
+          <div className="portrait-cross bottom-right" aria-hidden="true">
+            +
+          </div>
+          <div className="portrait-label">
+            <span className="status-dot" /> HUMAN AT THE CORE
+          </div>
+        </>
+      )}
     </div>
   );
 }

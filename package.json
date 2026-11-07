@@ -13,6 +13,8 @@
     "test:e2e": "playwright test",
     "db:migrate": "node --env-file=.env.local scripts/migrate.mjs",
     "db:seed": "node --env-file=.env.local scripts/seed.mjs",
+    "skills:import": "node --env-file=.env.local scripts/import-tech-stack.mjs",
+    "projects:import-linkedin": "node --env-file=.env.local scripts/import-linkedin-projects.mjs",
     "owner:setup": "node --env-file=.env.local scripts/owner.mjs",
     "db:local": "node scripts/local-db.mjs",
     "db:stop": "node scripts/local-db.mjs --stop",

@@ -32,9 +32,35 @@ export function SocialIcon({
       focusable="false"
       data-social-icon={kind}
     >
+      {kind === "instagram" && (
+        <defs>
+          <linearGradient
+            id="contact-instagram-brand"
+            x1="0"
+            y1="1"
+            x2="1"
+            y2="0"
+          >
+            <stop offset="0%" stopColor="#FFDC80" />
+            <stop offset="25%" stopColor="#F77737" />
+            <stop offset="50%" stopColor="#E1306C" />
+            <stop offset="75%" stopColor="#C13584" />
+            <stop offset="100%" stopColor="#833AB4" />
+          </linearGradient>
+        </defs>
+      )}
       {paths[kind].map((d, i) => (
         <path key={i} d={d} />
       ))}
+      {kind === "instagram" &&
+        paths.instagram.map((d, i) => (
+          <path
+            key={`brand-${i}`}
+            className="social-brand-path"
+            d={d}
+            fill="url(#contact-instagram-brand)"
+          />
+        ))}
     </svg>
   );
 }
