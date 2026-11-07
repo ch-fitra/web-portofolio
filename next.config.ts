@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
+// npm runs in the app directory, including isolated update.sh build checkouts.
+// Do not infer the root from a parent checkout's package-lock.json.
+const projectRoot = process.cwd();
 const config: NextConfig = {
   output: "standalone",
+  outputFileTracingRoot: projectRoot,
+  turbopack: { root: projectRoot },
   poweredByHeader: false,
   outputFileTracingExcludes: {
     "/*": ["./.local/**/*", "./.env*", "./storage/**/*", "./tests/**/*"],
