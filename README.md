@@ -58,6 +58,8 @@ Integration/E2E hanya berjalan pada cluster terisolasi port 55432. E2E memakai `
 
 ## Deploy ke server sendiri
 
+Setelah instalasi di server `fitra`, update kode yang sudah di-push ke `main` dengan satu perintah: `bash ~/projects/portofolio-web/update.sh`. Script memakai Node 24 sesuai service, membangun versi baru di direktori sementara, mengganti hasil build setelah sukses, lalu memeriksa HTTP 200. Jika versi baru gagal menyala, script mencoba memulihkan build sebelumnya. Password sudo mungkin diminta. Database/media tidak diubah; perubahan migrasi database atau kode server yang belum di-commit menghentikan update untuk ditangani terpisah.
+
 **Untuk membawa seluruh data yang tersimpan saat ini**, gunakan [panduan transfer ke VPS Linux](docs/TRANSFER_TO_VPS.md). Jalankan `npm run transfer:export`, transfer pasangan backup/kunci secara privat, lalu `transfer:restore` di database kosong. Prosedur seed di bawah hanya untuk instalasi baru tanpa data lama.
 
 Tidak ada deployment yang dilakukan otomatis. Contoh Linux + Nginx disediakan; sesuaikan dengan server Anda.
